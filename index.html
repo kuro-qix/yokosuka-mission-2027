@@ -36,7 +36,7 @@
   --rain: #3F5677;
   --rain-soft: #E6EBF3;
   --radius: 16px;
-  --tabbar-h: 64px;
+  --tabbar-h: 56px;
   --ease: cubic-bezier(.22, 1, .36, 1);
   color-scheme: light;
 }
@@ -49,7 +49,7 @@ body {
   font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.65;
-  padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 24px);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 24px);
 }
 a { color: var(--sea); }
 button { font: inherit; color: inherit; }
@@ -234,7 +234,7 @@ details.about p { margin: 0 0 8px; font-size: 15px; }
 .send-rows li.failed { flex-wrap: wrap; padding: 8px 0; }
 .send-rows li.failed .row-name { flex-basis: 100%; }
 .toast {
-  position: fixed; left: 50%; bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 16px);
+  position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 24px);
   transform: translateX(-50%); background: var(--navy); color: #fff; padding: 10px 16px; border-radius: 999px;
   font-size: 14px; font-weight: 700; opacity: 0; pointer-events: none; transition: opacity .2s var(--ease); z-index: 30;
 }
@@ -269,11 +269,11 @@ details.about p { margin: 0 0 8px; font-size: 15px; }
 .team { border-radius: 12px; padding: 10px; color: #fff; font-weight: 900; text-align: center; font-size: 15px; }
 .footer { text-align: center; color: var(--muted); font-size: 13px; margin: 28px 0 0; }
 
-/* ---------- tab bar ---------- */
+/* ---------- tab bar（「つぎはこれ」の下。スクロールしても画面の上に残る） ---------- */
 .tabbar {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
-  background: rgba(255,255,255,.96); backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px);
-  border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom);
+  position: sticky; top: 0; z-index: 20; margin: 16px -16px 12px;
+  background: rgba(246,241,231,.96); backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top);
 }
 .tabbar-inner { max-width: 560px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
 .tab {
@@ -283,7 +283,7 @@ details.about p { margin: 0 0 8px; font-size: 15px; }
 .tab .icon { width: 24px; height: 24px; }
 .tab[aria-selected="true"] { color: var(--brick); }
 .tab[aria-selected="true"]::before {
-  content: ""; position: absolute; top: 0; left: 28%; right: 28%; height: 3px; border-radius: 0 0 3px 3px; background: var(--brick);
+  content: ""; position: absolute; bottom: 0; left: 22%; right: 22%; height: 3px; border-radius: 3px 3px 0 0; background: var(--brick);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -309,6 +309,15 @@ details.about p { margin: 0 0 8px; font-size: 15px; }
 <main class="wrap">
   <section class="next" id="next" aria-live="polite"></section>
 
+  <nav class="tabbar" aria-label="しおりのメニュー">
+    <div class="tabbar-inner" role="tablist">
+      <button class="tab" id="tab-route" role="tab" data-tab="route" aria-controls="panel-route" aria-selected="true"></button>
+      <button class="tab" id="tab-spots" role="tab" data-tab="spots" aria-controls="panel-spots" aria-selected="false"></button>
+      <button class="tab" id="tab-mission" role="tab" data-tab="mission" aria-controls="panel-mission" aria-selected="false"></button>
+      <button class="tab" id="tab-info" role="tab" data-tab="info" aria-controls="panel-info" aria-selected="false"></button>
+    </div>
+  </nav>
+
   <section class="panel" id="panel-route" data-panel="route" role="tabpanel" aria-labelledby="tab-route"></section>
   <section class="panel" id="panel-spots" data-panel="spots" role="tabpanel" aria-labelledby="tab-spots" hidden></section>
   <section class="panel" id="panel-mission" data-panel="mission" role="tabpanel" aria-labelledby="tab-mission" hidden></section>
@@ -316,15 +325,6 @@ details.about p { margin: 0 0 8px; font-size: 15px; }
 
   <p class="footer">QIX 社員旅行 幹事：宮垣・黒澤・長谷川</p>
 </main>
-
-<nav class="tabbar" aria-label="しおりのメニュー">
-  <div class="tabbar-inner" role="tablist">
-    <button class="tab" id="tab-route" role="tab" data-tab="route" aria-controls="panel-route" aria-selected="true"></button>
-    <button class="tab" id="tab-spots" role="tab" data-tab="spots" aria-controls="panel-spots" aria-selected="false"></button>
-    <button class="tab" id="tab-mission" role="tab" data-tab="mission" aria-controls="panel-mission" aria-selected="false"></button>
-    <button class="tab" id="tab-info" role="tab" data-tab="info" aria-controls="panel-info" aria-selected="false"></button>
-  </div>
-</nav>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -1150,8 +1150,8 @@ function showTab(next) {
   renderTabs();
   $$(".panel").forEach((p) => { p.hidden = p.dataset.panel !== tab; });
   const panel = $(`#panel-${tab}`);
-  // タブを押したら、そのタブの見出しが画面の上に来るようにする
-  const y = panel.getBoundingClientRect().top + window.scrollY - 8;
+  // タブを押したら、そのタブの見出しが（上に残るタブのすぐ下に）来るようにする
+  const y = panel.getBoundingClientRect().top + window.scrollY - $(".tabbar").offsetHeight - 8;
   const before = window.scrollY;
   window.scrollTo({ top: y, behavior: reduceMotion ? "auto" : "smooth" });
   // なめらかスクロールが効かない環境では、すぐに移動する
