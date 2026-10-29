@@ -262,7 +262,7 @@ details.about p { margin: 0 0 8px; font-size: 15px; }
   text-align: left; cursor: pointer; padding: 4px 0; font-size: 15px;
 }
 .pack .box { width: 26px; height: 26px; border-radius: 8px; border: 2px solid var(--line); display: grid; place-items: center; color: transparent; flex: none; }
-.pack .box .icon { width: 18px; height: 18px; stroke-width: 3; margin: 0; }
+.pack .box .icon { width: 18px; height: 18px; stroke-width: 3; margin: 0; color: inherit; } /* 未チェックの箱にレンガ色のチェックが出ないように */
 .pack button[aria-checked="true"] .box { background: var(--ok); border-color: var(--ok); color: #fff; }
 .pack button[aria-checked="true"] span:last-child { color: var(--muted); text-decoration: line-through; }
 .teams { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
@@ -286,6 +286,99 @@ details.about p { margin: 0 0 8px; font-size: 15px; }
   content: ""; position: absolute; bottom: 0; left: 22%; right: 22%; height: 3px; border-radius: 3px 3px 0 0; background: var(--brick);
 }
 
+/* ---------- パソコン（960px 以上）：横幅を使う。スマホ（959px 以下）は上のまま変えない ---------- */
+.tabbar-brand, .hero-visual { display: none; }
+@media (min-width: 960px) {
+  :root { --hd-h: 64px; --hd-total: calc(var(--hd-h) + env(safe-area-inset-top)); }
+  html { scroll-padding-top: calc(var(--hd-total) + 16px); }
+  body { padding-top: var(--hd-total); }
+  .wrap { max-width: 1200px; padding: 0 24px; }
+
+  /* ヘッダー：横幅いっぱいの紺の帯。左にロゴ文字、右にタブ（スマホと同じ .tabbar を画面の上に固定して使う） */
+  .tabbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 40; margin: 0;
+    height: var(--hd-total); padding: env(safe-area-inset-top) max(24px, calc(50% - 576px)) 0;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    background: var(--navy); border-bottom: 0; -webkit-backdrop-filter: none; backdrop-filter: none;
+    box-shadow: 0 4px 16px rgba(11, 37, 69, .16);
+  }
+  .tabbar-brand { display: flex; align-items: baseline; gap: 14px; margin: 0; color: #fff; white-space: nowrap; }
+  .tabbar-brand b { font-size: 20px; font-weight: 900; letter-spacing: .04em; line-height: 1; }
+  .tabbar-brand b span { color: #F2B8A6; }
+  .tabbar-brand small { font-size: 13px; font-weight: 700; letter-spacing: .1em; opacity: .8; }
+  .tabbar-inner { display: flex; gap: 4px; max-width: none; margin: 0; }
+  .tab {
+    height: 44px; flex-direction: row; gap: 8px; padding: 0 18px; border-radius: 999px;
+    font-size: 15px; color: rgba(255, 255, 255, .82); transition: background .2s var(--ease), color .2s var(--ease);
+  }
+  .tab .icon { width: 20px; height: 20px; }
+  .tab:hover { background: rgba(255, 255, 255, .12); color: #fff; }
+  .tab[aria-selected="true"] { background: #fff; color: var(--navy); }
+  .tab[aria-selected="true"]::before { display: none; }
+  .tab:focus-visible { outline-color: #fff; }
+
+  /* トップ：左に見出し・日付・天気の切り替え、右にアーチ形のイラスト */
+  .hero { background: var(--sand); color: var(--ink); padding: 48px 0 40px; }
+  .hero::after { display: none; }
+  .hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: clamp(40px, 5vw, 80px); }
+  .hero .eyebrow { font-size: 15px; font-weight: 700; color: var(--brick); opacity: 1; }
+  .hero h1 { font-size: clamp(56px, 6vw, 84px); line-height: 1.04; margin: 14px 0 18px; }
+  .hero h1 span { color: var(--brick); }
+  .hero .date { font-size: 19px; font-weight: 700; opacity: 1; margin: 0 0 28px; }
+  .mode { background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+  .mode button { color: var(--navy); padding: 0 20px; }
+  .mode button:hover { background: var(--sea-soft); }
+  .mode button[aria-pressed="true"] { background: var(--navy); color: #fff; }
+  .mode-note { font-size: 15px; color: var(--muted); opacity: 1; max-width: 32em; margin-top: 14px; }
+  .hero-visual {
+    display: block; position: relative; width: clamp(280px, calc((100vh - var(--hd-h) - 240px) * .8), 440px); aspect-ratio: 4 / 5;
+    border-radius: 50% 50% 28px 28px / 40% 40% 28px 28px; overflow: hidden; background: var(--navy-2);
+    box-shadow: 0 24px 48px rgba(11, 37, 69, .18);
+  }
+  .hero-art { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  /* 画像は図形の上に重ねる。読めなければ透明のままで、下の図形が見える */
+  .hero-visual::after { content: ""; position: absolute; inset: 0; background: url("img/hero-sarushima.webp") 50% 50% / cover no-repeat; }
+  .art-sun { fill: var(--sand); opacity: .92; }
+  .art-island { fill: var(--navy); }
+  .art-pole { stroke: var(--sand); stroke-width: 5; stroke-linecap: round; fill: none; }
+  .art-flag, .art-arch { fill: var(--brick); }
+  .art-sea { fill: var(--sea); }
+  .art-wave { fill: none; stroke: #fff; stroke-width: 4; stroke-linecap: round; opacity: .45; }
+  .art-wave.w2 { opacity: .3; }
+  .art-wave.w3 { opacity: .18; }
+
+  /* 本文：左にタブの中身、右に「つぎはこれ」（ヘッダーの下に残る） */
+  main.wrap {
+    display: grid; grid-template-columns: minmax(0, 1fr) clamp(280px, 28vw, 360px); grid-template-rows: auto auto;
+    column-gap: clamp(32px, 3.5vw, 48px); align-items: start; padding-top: 8px;
+  }
+  .next { grid-column: 2; grid-row: 1; margin-top: 16px; position: sticky; top: calc(var(--hd-total) + 24px); padding: 22px 22px 20px; }
+  .panel { grid-column: 1; grid-row: 1; min-width: 0; padding-top: 16px; }
+  .panel h2 { margin-top: 0; font-size: 26px; }
+  .footer { grid-column: 1 / -1; grid-row: 2; }
+  .card { margin-bottom: 16px; }
+  .btn.small { min-height: 44px; }
+
+  /* 行程：時刻の線はそのまま。カードを広くして、地図ボタンを右に */
+  .tl-body { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; align-items: center; padding: 14px 18px; }
+  .tl-title, .tl-note { grid-column: 1; }
+  .tl-actions { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; }
+
+  /* スポット・ミッション：カードを2列に（見出し・説明・チーム・送信のカードは横幅いっぱい） */
+  #panel-spots:not([hidden]), #panel-mission:not([hidden]) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; }
+  #panel-spots > *, #panel-mission > * { grid-column: 1 / -1; }
+  #panel-spots > .spot, #panel-mission > .mission { grid-column: auto; }
+  #panel-mission > .group-title { margin-top: 8px; }
+  /* 並んだスポットのカードは高さがそろうので、「どんな場所？」と地図ボタンを下にそろえる */
+  #panel-spots > .spot { display: flex; flex-direction: column; }
+  #panel-spots .spot-meta { margin-bottom: auto; }
+
+  /* 持ち物：持ち物チェックと注意を2列に（左の列から順に流す） */
+  #panel-info:not([hidden]) { columns: 2; column-gap: 16px; }
+  #panel-info > h2 { column-span: all; }
+  #panel-info > .card { break-inside: avoid; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; }
 }
@@ -295,14 +388,38 @@ details.about p { margin: 0 0 8px; font-size: 15px; }
 
 <header class="hero">
   <div class="wrap">
-    <p class="eyebrow">QIX 社員旅行 2027</p>
-    <h1>YOKOSUKA<br><span>MISSION</span></h1>
-    <p class="date">2027年2月9日（火）日帰り｜横須賀・猿島</p>
-    <div class="mode" role="group" aria-label="天気で行程を切り替える">
-      <button type="button" data-mode="sunny" aria-pressed="true"></button>
-      <button type="button" data-mode="rain" aria-pressed="false"></button>
+    <div class="hero-text">
+      <p class="eyebrow">QIX 社員旅行 2027</p>
+      <h1>YOKOSUKA<br><span>MISSION</span></h1>
+      <p class="date">2027年2月9日（火）日帰り｜横須賀・猿島</p>
+      <div class="mode" role="group" aria-label="天気で行程を切り替える">
+        <button type="button" data-mode="sunny" aria-pressed="true"></button>
+        <button type="button" data-mode="rain" aria-pressed="false"></button>
+      </div>
+      <p class="mode-note" id="modeNote"></p>
     </div>
-    <p class="mode-note" id="modeNote"></p>
+    <!-- パソコン（960px 以上）だけ出すイラスト。画像は CSS の背景で読む（スマホでは読み込まない）。読めないときは下の図形が見える -->
+    <div class="hero-visual" aria-hidden="true">
+      <svg class="hero-art" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" focusable="false">
+        <defs>
+          <linearGradient id="heroSky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" style="stop-color:var(--navy)"/>
+            <stop offset=".6" style="stop-color:var(--navy-2)"/>
+            <stop offset="1" style="stop-color:var(--sea)"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="500" fill="url(#heroSky)"/>
+        <circle class="art-sun" cx="292" cy="136" r="38"/>
+        <path class="art-island" d="M40 362C96 300 140 258 200 258s104 42 160 104Z"/>
+        <path class="art-pole" d="M200 258V166"/>
+        <path class="art-flag" d="M203 168l54 17-54 18Z"/>
+        <path class="art-arch" d="M180 362v-30a20 20 0 0 1 40 0v30Z"/>
+        <path class="art-sea" d="M0 356q25-10 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0V500H0Z"/>
+        <path class="art-wave" d="M-10 398q25-10 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0"/>
+        <path class="art-wave w2" d="M-35 436q25-10 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0"/>
+        <path class="art-wave w3" d="M-10 474q25-10 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0"/>
+      </svg>
+    </div>
   </div>
 </header>
 
@@ -310,6 +427,7 @@ details.about p { margin: 0 0 8px; font-size: 15px; }
   <section class="next" id="next" aria-live="polite"></section>
 
   <nav class="tabbar" aria-label="しおりのメニュー">
+    <p class="tabbar-brand" aria-hidden="true"><b>YOKOSUKA <span>MISSION</span></b><small>QIX 社員旅行 2027</small></p>
     <div class="tabbar-inner" role="tablist">
       <button class="tab" id="tab-route" role="tab" data-tab="route" aria-controls="panel-route" aria-selected="true"></button>
       <button class="tab" id="tab-spots" role="tab" data-tab="spots" aria-controls="panel-spots" aria-selected="false"></button>
