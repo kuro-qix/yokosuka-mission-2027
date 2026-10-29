@@ -176,6 +176,25 @@ details.about[open] summary .chev { transform: rotate(180deg); }
 details.about p { margin: 0 0 8px; font-size: 15px; }
 .spot-actions { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
 
+/* ---------- 行程 → スポットの「どんな場所？」へ飛ぶ ---------- */
+/* 行程のタイトル：押せることが分かる程度の下線。押せる高さは上下の余白で 44px に（行の高さ・見た目は変えない） */
+.tl-link {
+  position: relative; padding: 11px 0; color: inherit;
+  text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+  text-decoration-color: rgba(29, 92, 143, .45);
+}
+.tl-link:hover { color: var(--sea); text-decoration-color: currentColor; }
+.tl-actions .btn.small { min-height: 44px; }
+/* スポットのカードの上に一時的に出す「← 行程に戻る」 */
+.jump-back {
+  align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px;
+  margin: -4px 0 10px; border: 0; border-radius: 999px; background: var(--brick-soft); color: var(--brick-dark);
+  font-size: 14px; font-weight: 700; cursor: pointer; transition: transform .15s var(--ease);
+}
+.jump-back:active { transform: scale(.97); }
+/* 動きを減らす設定・Motion が読めないとき：動かさずに枠の色だけ1秒出す */
+.jump-flash { outline: 3px solid var(--brick); outline-offset: 3px; }
+
 /* ---------- missions ---------- */
 .team-pick { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; }
 .team-pick button {
@@ -489,62 +508,62 @@ const mapUrl = (q) => `https://www.google.com/maps/search/?api=1&query=${encodeU
 /* 行程（must=時間厳守） */
 const ROUTES = {
   sunny: [
-    { t: "10:00", title: "ヴェルニー公園に集合", note: "全体説明・チーム発表、ミッション開始。記念館側の海沿いの一部は工事で立入禁止です", map: "ヴェルニー公園 横須賀", must: true },
-    { t: "10:15", title: "ヴェルニー記念館を見学（約25分）", note: "横須賀製鉄所と近代化を知る", map: "ヴェルニー記念館" },
-    { t: "10:40", title: "公園を散策しながら、どぶ板通りへ", note: "徒歩約10分。看板クイズに挑戦しながら", map: "どぶ板通り 横須賀" },
-    { t: "11:00", title: "昼食：TSUNAMI BOX", note: "2時間飲み放題付きヨコスカバーガー（ラストオーダーは90分）。三笠公園にはトイレがないので、ここで済ませておく", map: "TSUNAMI 横須賀市本町2-5-4" },
-    { t: "12:30", title: "三笠公園へ移動（徒歩約20分）", note: "出発前に、どぶ板通りのセブン-イレブン（本町2丁目店）で飲み物を。猿島には水道がありません", map: "三笠公園 横須賀" },
-    { t: "13:10", title: "三笠ターミナル（桟橋）で乗船列に並ぶ", note: "猿島の船は予約なし・並んだ順。全員でまとまって並ぶ。三笠公園の入口は猿島桟橋側の1か所だけ", map: "猿島航路 三笠ターミナル", must: true },
-    { t: "13:30", title: "三笠ターミナル発 → 猿島（約10分）", note: "船の上は冷えます", map: "猿島航路 三笠ターミナル" },
-    { t: "13:50", title: "猿島ミッション（約100分）", note: "チームで島を探検。立入禁止の場所・岩場には入らない", map: "猿島 横須賀" },
-    { t: "15:30", title: "猿島桟橋に集合・点呼", note: "写真の提出もここで締切", map: "猿島 桟橋", must: true },
-    { t: "16:00", title: "猿島発の最終便で三笠桟橋へ", note: "乗り遅れると島に残ってしまいます", map: "猿島 桟橋", must: true },
-    { t: "16:10", title: "三笠公園で表彰・全体写真", note: "", map: "三笠公園 横須賀" },
+    { t: "10:00", title: "ヴェルニー公園に集合", note: "全体説明・チーム発表、ミッション開始。記念館側の海沿いの一部は工事で立入禁止です", map: "ヴェルニー公園 横須賀", must: true, spot: "verny-park" },
+    { t: "10:15", title: "ヴェルニー記念館を見学（約25分）", note: "横須賀製鉄所と近代化を知る", map: "ヴェルニー記念館", spot: "verny-museum" },
+    { t: "10:40", title: "公園を散策しながら、どぶ板通りへ", note: "徒歩約10分。看板クイズに挑戦しながら", map: "どぶ板通り 横須賀", spot: "dobuita" },
+    { t: "11:00", title: "昼食：TSUNAMI BOX", note: "2時間飲み放題付きヨコスカバーガー（ラストオーダーは90分）。三笠公園にはトイレがないので、ここで済ませておく", map: "TSUNAMI 横須賀市本町2-5-4", spot: "tsunami-box" },
+    { t: "12:30", title: "三笠公園へ移動（徒歩約20分）", note: "出発前に、どぶ板通りのセブン-イレブン（本町2丁目店）で飲み物を。猿島には水道がありません", map: "三笠公園 横須賀", spot: "seven-eleven" },
+    { t: "13:10", title: "三笠ターミナル（桟橋）で乗船列に並ぶ", note: "猿島の船は予約なし・並んだ順。全員でまとまって並ぶ。三笠公園の入口は猿島桟橋側の1か所だけ", map: "猿島航路 三笠ターミナル", must: true, spot: "mikasa-park" },
+    { t: "13:30", title: "三笠ターミナル発 → 猿島（約10分）", note: "船の上は冷えます", map: "猿島航路 三笠ターミナル", spot: "mikasa-park" },
+    { t: "13:50", title: "猿島ミッション（約100分）", note: "チームで島を探検。立入禁止の場所・岩場には入らない", map: "猿島 横須賀", spot: "sarushima" },
+    { t: "15:30", title: "猿島桟橋に集合・点呼", note: "写真の提出もここで締切", map: "猿島 桟橋", must: true, spot: "sarushima" },
+    { t: "16:00", title: "猿島発の最終便で三笠桟橋へ", note: "乗り遅れると島に残ってしまいます", map: "猿島 桟橋", must: true, spot: "sarushima" },
+    { t: "16:10", title: "三笠公園で表彰・全体写真", note: "", map: "三笠公園 横須賀", spot: "mikasa-park" },
     { t: "16:40", title: "現地解散", note: "京急 横須賀中央駅まで徒歩約15分。その後は自由", map: "横須賀中央駅" },
   ],
   rain: [
-    { t: "10:00", title: "東京テレポート駅に集合", note: "りんかい線。チーム発表", map: "東京テレポート駅", must: true },
-    { t: "10:30", title: "ラウンドワンでチーム対抗ボウリング", note: "ダイバーシティ東京 プラザ", map: "ラウンドワン ダイバーシティ東京プラザ店" },
-    { t: "12:15", title: "WOOD DESIGN PARK ODAIBAで室内BBQ（約90分）", note: "デックス東京ビーチ", map: "WOOD DESIGN PARK ODAIBA" },
-    { t: "14:00", title: "東京ジョイポリスでチーム対抗", note: "団体パスポート", map: "東京ジョイポリス" },
-    { t: "16:00", title: "表彰・全体写真、現地解散", note: "", map: "東京ジョイポリス" },
+    { t: "10:00", title: "東京テレポート駅に集合", note: "りんかい線。チーム発表", map: "東京テレポート駅", must: true, spot: "tokyo-teleport" },
+    { t: "10:30", title: "ラウンドワンでチーム対抗ボウリング", note: "ダイバーシティ東京 プラザ", map: "ラウンドワン ダイバーシティ東京プラザ店", spot: "round-one" },
+    { t: "12:15", title: "WOOD DESIGN PARK ODAIBAで室内BBQ（約90分）", note: "デックス東京ビーチ", map: "WOOD DESIGN PARK ODAIBA", spot: "wood-design-park" },
+    { t: "14:00", title: "東京ジョイポリスでチーム対抗", note: "団体パスポート", map: "東京ジョイポリス", spot: "joypolis" },
+    { t: "16:00", title: "表彰・全体写真、現地解散", note: "", map: "東京ジョイポリス", spot: "joypolis" },
   ],
 };
 
 /* スポット（hours は調査結果で更新） */
 const SPOTS = {
   sunny: [
-    { icon: "tree", name: "ヴェルニー公園", hours: "いつでも", stay: "集合・散策", map: "ヴェルニー公園 横須賀",
+    { id: "verny-park", icon: "tree", name: "ヴェルニー公園", hours: "いつでも", stay: "集合・散策", map: "ヴェルニー公園 横須賀",
       notes: ["JR横須賀駅のすぐ前。京急汐入駅から徒歩約5分", "2027年3月15日まで海沿いの柵の改修工事中。記念館の前から続く海沿いの一部が立入禁止です（公園の中の広場や庭は入れます）"],
       about: ["もとは「臨海公園」という名前で、横須賀製鉄所の建設を指揮したフランス人技師ヴェルニーにちなんで、フランス式庭園の様式に整え直されました（2002年完成）。フランスの品種を中心に、約130種類・約1,300株のバラが植えられています。", "海の向こうには、右手に米海軍の基地、左手に海上自衛隊の艦船が並び、軍港の街・横須賀らしい景色が見られます。", "ヴェルニーと、製鉄所の計画を立てた幕府の小栗上野介の胸像が並んでいます。小栗上野介は2027年のNHK大河ドラマの主人公です。戦艦「陸奥」の主砲も展示されています。"] },
-    { icon: "museum", name: "ヴェルニー記念館", hours: "9:00〜16:00", stay: "約25分", map: "ヴェルニー記念館",
+    { id: "verny-museum", icon: "museum", name: "ヴェルニー記念館", hours: "9:00〜16:00", stay: "約25分", map: "ヴェルニー記念館",
       notes: ["入館無料", "JR横須賀駅から徒歩1分"],
       about: ["横須賀製鉄所の建設を指揮したフランス人技師ヴェルニーを記念する施設です。製鉄所は1865年に起工し、幕府の小栗上野介が計画を立て、技術をヴェルニーが担いました。日本の近代的なものづくりの出発点のひとつで、のちの横須賀海軍工廠です。当時のドックは今も米海軍横須賀基地の中で使われています。", "館内には、製鉄所で使われた1865年製のスチームハンマー2台（オランダから輸入、国の重要文化財）が展示されています。大きい3トンの方は、1996年まで約130年間動いていました。"] },
-    { icon: "store", name: "どぶ板通り", hours: "お店は10〜11時ごろから", stay: "歩いて通過", map: "どぶ板通り 横須賀",
+    { id: "dobuita", icon: "store", name: "どぶ板通り", hours: "お店は10〜11時ごろから", stay: "歩いて通過", map: "どぶ板通り 横須賀",
       notes: ["開店時間は店ごとに違い、11時開店の店が多いです", "火曜定休の店もあります"],
       about: ["通りの真ん中を流れていたどぶ川に、海軍工廠から提供された厚い鉄板でふたをしたことが名前の由来です。", "戦後は横須賀に駐留した米軍の街として栄えました。今も英語の看板が並び、アメリカの雰囲気が残っています。歩道には有名人の手形も埋め込まれています。"] },
-    { icon: "food", name: "TSUNAMI BOX（昼食）", hours: "11:00〜22:00", stay: "11:00〜12:30", map: "TSUNAMI 横須賀市本町2-5-4",
+    { id: "tsunami-box", icon: "food", name: "TSUNAMI BOX（昼食）", hours: "11:00〜22:00", stay: "11:00〜12:30", map: "TSUNAMI 横須賀市本町2-5-4",
       notes: ["横須賀市本町2-5-4（どぶ板通り）", "2時間飲み放題付き（ラストオーダーは90分）", "1階はアメリカンなレストランバー、2階はメキシカン。チームごとに座ります", "三笠公園にトイレがないので、ここで済ませておく"],
       about: ["ボリュームのあるハンバーガーとメキシコ料理の店です。横須賀名物のヨコスカネイビーバーガーが食べられます。"] },
-    { icon: "store", name: "セブン-イレブン 横須賀本町2丁目店", hours: "24時間", stay: "12:30の出発前に", map: "セブン-イレブン 横須賀本町2丁目店",
+    { id: "seven-eleven", icon: "store", name: "セブン-イレブン 横須賀本町2丁目店", hours: "24時間", stay: "12:30の出発前に", map: "セブン-イレブン 横須賀本町2丁目店",
       notes: ["横須賀市本町2-20-4（どぶ板通りのすぐ近く）", "猿島には水道がありません。飲み物はここで買っておく"], about: [] },
-    { icon: "ship", name: "三笠公園・記念艦三笠", hours: "公園 17:00まで", stay: "13:10に桟橋へ／16:10表彰", map: "三笠公園 横須賀",
+    { id: "mikasa-park", icon: "ship", name: "三笠公園・記念艦三笠", hours: "公園 17:00まで", stay: "13:10に桟橋へ／16:10表彰", map: "三笠公園 横須賀",
       notes: ["2027年3月末まで改修工事中。入口は猿島桟橋側の1か所だけ", "工事のため、公園内にトイレがありません", "記念艦三笠は9:00〜16:30（入艦は16:00まで）。艦内見学は今回の行程に入っていません"],
       about: ["記念艦三笠は1902年にイギリスで完成した戦艦で、日露戦争の日本海海戦（1905年）で東郷平八郎司令長官が乗った連合艦隊の旗艦です。", "1926年から記念艦として保存されていて、イギリスの「ヴィクトリー」、アメリカの「コンスティチューション」と並ぶ世界三大記念艦のひとつです。", "三笠公園は1961年に開園。園内には東郷平八郎の像が立っています。"] },
-    { icon: "island", name: "猿島", hours: "最終便 16:00", stay: "13:40ごろ〜16:00", map: "猿島 横須賀",
+    { id: "sarushima", icon: "island", name: "猿島", hours: "最終便 16:00", stay: "13:40ごろ〜16:00", map: "猿島 横須賀",
       notes: ["行きの船は三笠ターミナル発（毎時30分）、帰りの最終便は猿島発16:00", "島内に水道はありません。飲み物は持って渡ってください", "売店（Oceans Kitchen）は15:00まで", "トイレは2か所（桟橋の近くと管理棟の2階）"],
       about: ["東京湾に浮かぶ唯一の自然の島で、湾内で最大の無人島です。名前は、霧で道に迷った日蓮上人を白い猿が島の奥へ案内した、という言い伝えから来ています。", "幕末には台場（砲台）が造られ、明治時代には首都・東京を守る陸軍の要塞が築かれました（1881年着工、1884年完成）。全国でも珍しいフランス積みのレンガのトンネルや砲台跡が残り、2015年に国の史跡になりました。", "苔むしたレンガの景色は、ファンタジー映画の世界のようだとよく言われます。"] },
-    { icon: "train", name: "京急 横須賀中央駅（解散後）", hours: "—", stay: "三笠公園から徒歩約15分", map: "横須賀中央駅",
+    { id: "yokosuka-chuo", icon: "train", name: "京急 横須賀中央駅（解散後）", hours: "—", stay: "三笠公園から徒歩約15分", map: "横須賀中央駅",
       notes: ["帰りはここから。快特・特急が停まります"], about: [] },
   ],
   rain: [
-    { icon: "train", name: "東京テレポート駅（りんかい線）", hours: "—", stay: "10:00集合", map: "東京テレポート駅",
+    { id: "tokyo-teleport", icon: "train", name: "東京テレポート駅（りんかい線）", hours: "—", stay: "10:00集合", map: "東京テレポート駅",
       notes: ["3施設とも駅から歩いて行けます"], about: [] },
-    { icon: "bowling", name: "ラウンドワン ダイバーシティ東京 プラザ店", hours: "2月は未公表", stay: "10:30〜", map: "ラウンドワン ダイバーシティ東京プラザ店",
+    { id: "round-one", icon: "bowling", name: "ラウンドワン ダイバーシティ東京 プラザ店", hours: "2月は未公表", stay: "10:30〜", map: "ラウンドワン ダイバーシティ東京プラザ店",
       notes: ["ダイバーシティ東京 プラザ6階。東京テレポート駅から徒歩約3分", "ボウリング2ゲーム（貸靴込み）", "参考：2026年11月の平日は朝8:00から営業"], about: [] },
-    { icon: "food", name: "WOOD DESIGN PARK ODAIBA", hours: "11:00〜23:00", stay: "12:15〜約90分", map: "WOOD DESIGN PARK ODAIBA",
+    { id: "wood-design-park", icon: "food", name: "WOOD DESIGN PARK ODAIBA", hours: "11:00〜23:00", stay: "12:15〜約90分", map: "WOOD DESIGN PARK ODAIBA",
       notes: ["デックス東京ビーチ5階。東京テレポート駅から徒歩5分", "全部屋内の席のBBQ"], about: [] },
-    { icon: "spark", name: "東京ジョイポリス", hours: "2月は未公表", stay: "14:00〜16:00", map: "東京ジョイポリス",
+    { id: "joypolis", icon: "spark", name: "東京ジョイポリス", hours: "2月は未公表", stay: "14:00〜16:00", map: "東京ジョイポリス",
       notes: ["デックス東京ビーチ3〜5階。東京テレポート駅から徒歩5分", "団体パスポート", "参考：2026年11月の平日は11:00〜19:00"], about: [] },
   ],
 };
@@ -657,7 +676,7 @@ function renderNext() {
       <p class="next-time">${f.t}</p>
       <p class="next-title">${esc(f.title)}</p>
       <p class="next-sub">${esc(f.note)}</p>
-      <div class="next-actions"><a class="btn primary" href="${mapUrl(f.map)}" target="_blank" rel="noopener">${ic("pin")}集合場所の地図</a></div>`;
+      <div class="next-actions"><a class="btn primary" href="${mapUrl(f.map)}" target="_blank" rel="noopener">${ic("pin")}集合場所の地図</a>${aboutLink(f, "btn")}</div>`;
   } else if (j.date > DAY) {
     html = `<p class="next-label">おつかれさまでした</p><p class="next-title">横須賀ミッション、ありがとうございました！</p>`;
   } else {
@@ -670,7 +689,7 @@ function renderNext() {
         <p class="next-time">${nx.t}</p>
         <p class="next-title">${esc(nx.title)}</p>
         ${nx.note ? `<p class="next-sub">${esc(nx.note)}</p>` : ""}
-        <div class="next-actions"><a class="btn primary" href="${mapUrl(nx.map)}" target="_blank" rel="noopener">${ic("pin")}地図を開く</a></div>`;
+        <div class="next-actions"><a class="btn primary" href="${mapUrl(nx.map)}" target="_blank" rel="noopener">${ic("pin")}地図を開く</a>${aboutLink(nx, "btn")}</div>`;
     } else {
       html = `${nowLine}<p class="next-label">今日の予定はここまで</p><p class="next-title">おつかれさまでした！気をつけて帰ってください</p>`;
     }
@@ -686,12 +705,15 @@ function renderRoute() {
   const isDay = j.date === DAY;
   const lis = items.map((it, i) => {
     const cls = ["tl", it.must ? "must" : "", isDay && i < cur ? "is-past" : "", isDay && i === cur ? "is-now" : ""].join(" ");
-    return `<li class="${cls}">
+    const s = spotOf(it);
+    // タイトルを押しても「どんな場所？」と同じ動き（キーボードでは隣のボタンで行けるので、タブ移動の順には入れない）
+    const title = s ? `<a class="tl-link" href="#spot-${s.id}" data-spot="${s.id}" tabindex="-1">${esc(it.title)}</a>` : esc(it.title);
+    return `<li class="${cls}" data-i="${i}">
       <div class="tl-time">${it.t}</div>
       <div class="tl-body">
-        <p class="tl-title">${esc(it.title)}${it.must ? ` <span class="chip brick">時間厳守</span>` : ""}</p>
+        <p class="tl-title">${title}${it.must ? ` <span class="chip brick">時間厳守</span>` : ""}</p>
         ${it.note ? `<p class="tl-note">${esc(it.note)}</p>` : ""}
-        <div class="tl-actions"><a class="btn small" href="${mapUrl(it.map)}" target="_blank" rel="noopener">${ic("pin")}地図</a></div>
+        <div class="tl-actions"><a class="btn small" href="${mapUrl(it.map)}" target="_blank" rel="noopener">${ic("pin")}地図</a>${aboutLink(it, "btn small")}</div>
       </div></li>`;
   }).join("");
   const top = mode === "rain"
@@ -704,7 +726,7 @@ function renderRoute() {
 
 function renderSpots() {
   const cards = SPOTS[mode].map((s) => `
-    <article class="card spot">
+    <article class="card spot" data-spot-id="${s.id}">
       <div class="spot-head">
         <div class="spot-ico">${ic(s.icon)}</div>
         <div>
@@ -721,7 +743,176 @@ function renderSpots() {
     </article>`).join("");
   $("#panel-spots").innerHTML = `<h2>${ic("map")}スポット</h2>
     <p class="lead">何時まで開いているか、どんな場所かをまとめました。「どんな場所？」を押すと解説が開きます。</p>${cards}`;
-  $$("#panel-spots details.about").forEach((d) => d.addEventListener("toggle", () => { if (d.open) enter($$("p", d), 0.05); }));
+  $$("#panel-spots details.about").forEach((d) => d.addEventListener("toggle", () => {
+    if (d.dataset.quiet) { delete d.dataset.quiet; return; } // 行程から飛んできて開いたときは、着いてから段落を出す（openSpot）
+    if (d.open) enter($$("p", d), 0.05);
+  }));
+}
+
+/* ============================================================
+   行程 → スポットの「どんな場所？」へ飛ぶ／戻る
+   URL は #spot-<ID>。飛ぶときに履歴を1段だけ積み、スマホの「戻る」でも行程の元の位置に戻る
+   ============================================================ */
+const BACK_TO = { route: "行程", mission: "ミッション", info: "持ち物", spots: "もとの位置" };
+let jump = null;  // スポットを見ているあいだ { id, from }（from は飛ぶ前の場所。共有リンクで開いたときは null）
+let jumpSeq = 0;  // 飛ぶ・戻るたびに増やす（途中で次の操作をしたら、前の光らせ方を止める）
+const hashSpot = () => { const m = /^#spot-([a-z-]+)$/.exec(location.hash); return m ? m[1] : ""; };
+const spotCard = (id) => $(`#panel-spots .spot[data-spot-id="${id}"]`);
+const cleanUrl = () => location.pathname + location.search;
+
+// 飛ぶ先のカードの上端を、上に残るタブ（パソコンはヘッダー）のすぐ下に合わせる（持ち上げて大きくした枠もタブに隠れない間）
+const belowBar = (el) => el.getBoundingClientRect().top + window.scrollY - $(".tabbar").offsetHeight - 16;
+
+// スクロールして、止まったら done（1回だけ）。なめらかスクロールが効かない環境ではすぐに移動する。途中で指で止めたらそこで終える
+function settleScroll(y, smooth, done) {
+  const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+  const goal = Math.round(Math.min(Math.max(0, y), max));
+  const start = window.scrollY;
+  let finished = false, guard = 0;
+  const finish = () => { if (finished) return; finished = true; clearTimeout(guard); done(); };
+  const jumpIfStuck = () => { if (Math.abs(window.scrollY - start) < 1 && Math.abs(start - goal) >= 2) window.scrollTo(0, goal); };
+  // requestAnimationFrame が止まっている（画面が裏にある等）ときも、必ず終える
+  guard = setTimeout(() => { jumpIfStuck(); finish(); }, smooth ? 1500 : 60);
+  if (!smooth || Math.abs(start - goal) < 2) { window.scrollTo(0, goal); requestAnimationFrame(finish); return; }
+  window.scrollTo({ top: goal, behavior: "smooth" });
+  let last = start, still = 0;
+  const tick = () => {
+    if (finished) return;
+    const cur = window.scrollY;
+    still = Math.abs(cur - last) < 0.5 ? still + 1 : 0;
+    last = cur;
+    if (Math.abs(cur - goal) < 2) { finish(); return; }
+    if (still >= 8) { jumpIfStuck(); finish(); return; }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+// ページを開いた直後は、文字（Webフォント）が後から来て位置がずれるので、読み終わったら合わせ直す
+function realignAfterFonts(seq, getY) {
+  if (!document.fonts || !document.fonts.ready) return;
+  const y0 = window.scrollY;
+  document.fonts.ready.then(() => { if (seq === jumpSeq && Math.abs(window.scrollY - y0) < 2) window.scrollTo(0, Math.max(0, getY())); });
+}
+
+// 着いたカードを目立たせる。lift=true は飛んだ先（ふわっと持ち上げる＋レンガ色の枠）、false は戻った先（枠だけ軽く）
+function glow(el, lift) {
+  if (!el) return;
+  clearTimeout(el._glowT);
+  if (!M) { // 動きを減らす設定・Motion が読めないとき：動かさずに枠の色だけ1秒出して消す
+    el.classList.add("jump-flash");
+    el._glowT = setTimeout(() => el.classList.remove("jump-flash"), 1000);
+    return;
+  }
+  const c = (a) => `rgba(181, 72, 47, ${a})`;
+  Object.assign(el.style, { outlineStyle: "solid", outlineWidth: "3px", outlineOffset: "3px", outlineColor: c(0) });
+  const anims = [M.animate(el, { outlineColor: [c(0), c(lift ? 0.9 : 0.6), c(0)] }, { duration: lift ? 0.6 : 0.45, times: [0, 0.3, 1], ease: "easeOut" })];
+  if (lift) anims.push(M.animate(el, { scale: [0.98, 1.02, 1] }, { duration: 0.5, ease: [0.22, 1, 0.36, 1] }));
+  // アニメーションが途中で止まっても、枠や拡大が残らないようにする（complete が最後の値を書き終えてから枠を外す）
+  el._glowT = setTimeout(() => {
+    anims.forEach((a) => { try { a.complete(); } catch (e) {} });
+    el._glowT = setTimeout(() => Object.assign(el.style, { outlineStyle: "", outlineWidth: "", outlineOffset: "", outlineColor: "", transform: "" }), 100);
+  }, 1000);
+}
+
+// 行程の行に対応するスポット（今の天気のスポットにあるときだけ）と、そこへ飛ぶボタン
+const spotOf = (it) => (it && it.spot ? SPOTS[mode].find((s) => s.id === it.spot) || null : null);
+// 解説（about）が無いスポットは、開く「どんな場所？」が無いので「スポットを見る」（着いたらカードを光らせるだけ）
+const aboutLink = (it, cls) => {
+  const s = spotOf(it);
+  if (!s) return "";
+  const label = s.about.length ? "どんな場所？" : "スポットを見る";
+  const aria = s.about.length ? `${esc(s.name)}はどんな場所？` : `${esc(s.name)}のスポットを見る`;
+  return `<a class="${cls}" href="#spot-${s.id}" data-spot="${s.id}" aria-label="${aria}">${ic("quiz")}${label}</a>`;
+};
+
+// 押した場所を覚える（戻ったときに同じ位置に出すため）
+function originOf(a) {
+  const li = a.closest(".tl");
+  if (li) return { kind: "route", tab: "route", mode, i: Number(li.dataset.i), top: Math.round($(".tl-body", li).getBoundingClientRect().top), y: Math.round(window.scrollY) };
+  return { kind: "next", tab, mode, y: Math.round(window.scrollY) };
+}
+
+// 飛んだ状態を終える（戻るボタンを消す）。clearUrl：自分でタブ・天気を切り替えたときは URL の #spot- も外す
+function endJump(clearUrl) {
+  jumpSeq++;
+  jump = null;
+  $$(".jump-back").forEach((b) => b.remove());
+  if (clearUrl && hashSpot()) {
+    history.replaceState(null, "", cleanUrl());
+    history.scrollRestoration = "auto";
+  }
+}
+
+// スポットのタブに切り替え、カードを上に出して「どんな場所？」を開き、光らせる
+function openSpot(id, { from = null, push = false, initial = false } = {}) {
+  const card = spotCard(id);
+  if (!card) return false;
+  endJump(false);
+  const seq = jumpSeq;
+  if (push) {
+    history.scrollRestoration = "manual"; // 戻ったときの位置は、こちらで元のカードに合わせる
+    history.replaceState({ ...(history.state || {}), shioriFrom: from }, "");
+    history.pushState({ shioriSpot: id, from }, "", `#spot-${id}`);
+  }
+  jump = { id, from };
+  showTab("spots", { scroll: false, motion: false });
+  if (from) {
+    card.insertAdjacentHTML("afterbegin", `<button type="button" class="jump-back" data-jump-back><span aria-hidden="true">←</span>${BACK_TO[from.tab] || "行程"}に戻る</button>`);
+  }
+  const d = $("details.about", card);
+  const ps = d ? $$("p", d) : [];
+  const anim = !!M && !initial;
+  if (d && !d.open) { d.dataset.quiet = "1"; d.open = true; }
+  if (anim) ps.forEach((p) => { p.style.opacity = "0"; });
+  const h = $(".spot-name", card);
+  h.tabIndex = -1;
+  h.focus({ preventScroll: true }); // 読み上げでも、どこに来たか分かるように
+  settleScroll(belowBar(card), !reduceMotion && !initial, () => {
+    if (seq !== jumpSeq) { ps.forEach((p) => { p.style.opacity = ""; }); return; }
+    glow(card, true);
+    if (anim) enter(ps, 0.05);
+    ps.forEach((p) => { p.style.opacity = ""; }); // 透明にしたのは着くまでのあいだだけ（出す動きは enter が持つ）
+  });
+  if (initial) realignAfterFonts(seq, () => belowBar(card));
+  return true;
+}
+
+// 飛ぶ前の場所（行程のカード／「つぎはこれ」）に戻って、軽く光らせる
+function backToOrigin(from, { initial = false } = {}) {
+  endJump(false);
+  const seq = jumpSeq;
+  history.scrollRestoration = "auto";
+  if (!from || from.mode !== mode) { showTab(from ? from.tab : "route"); return; } // 途中で天気を切り替えたときは、タブだけ戻す
+  showTab(from.tab, { scroll: false, motion: false });
+  let el = null, focusEl = null, getY = () => from.y;
+  if (from.kind === "route") {
+    const li = $(`#panel-route .tl[data-i="${from.i}"]`);
+    if (li) {
+      el = $(".tl-body", li);
+      focusEl = $(".tl-actions [data-spot]", li);
+      getY = () => el.getBoundingClientRect().top + window.scrollY - from.top;
+    }
+  } else {
+    el = $("#next");
+    focusEl = $("#next [data-spot]");
+  }
+  if (focusEl) focusEl.focus({ preventScroll: true });
+  settleScroll(getY(), !reduceMotion && !initial, () => { if (seq === jumpSeq) glow(el, false); });
+  if (initial) realignAfterFonts(seq, getY);
+}
+
+// 「← 行程に戻る」：積んだ履歴を1段戻す（スマホの「戻る」と同じ道。popstate で戻る）
+function goBackFromSpot() {
+  const from = jump && jump.from;
+  if (history.state && history.state.shioriSpot) {
+    history.back();
+    const s = jumpSeq;
+    // 履歴の「戻る」が効かない環境の保険
+    setTimeout(() => { if (s === jumpSeq && jump) { history.replaceState(null, "", cleanUrl()); backToOrigin(from); } }, 800);
+  } else {
+    backToOrigin(from);
+  }
 }
 
 /* ============================================================
@@ -1262,19 +1453,22 @@ function renderAll() {
   renderRoute(); renderSpots(); renderMissions(); renderInfo();
 }
 
-function showTab(next) {
+// scroll/motion：行程とスポットのあいだを飛ぶとき（openSpot・backToOrigin）は、位置と動きを向こうで決める
+function showTab(next, { scroll = true, motion = true } = {}) {
   if (next === tab) return;
   tab = next;
   renderTabs();
   $$(".panel").forEach((p) => { p.hidden = p.dataset.panel !== tab; });
   const panel = $(`#panel-${tab}`);
-  // タブを押したら、そのタブの見出しが（上に残るタブのすぐ下に）来るようにする
-  const y = panel.getBoundingClientRect().top + window.scrollY - $(".tabbar").offsetHeight - 8;
-  const before = window.scrollY;
-  window.scrollTo({ top: y, behavior: reduceMotion ? "auto" : "smooth" });
-  // なめらかスクロールが効かない環境では、すぐに移動する
-  setTimeout(() => { if (window.scrollY === before && Math.abs(before - y) > 4) window.scrollTo(0, y); }, 600);
-  enter(panel.children, 0.03);
+  if (scroll) {
+    // タブを押したら、そのタブの見出しが（上に残るタブのすぐ下に）来るようにする
+    const y = panel.getBoundingClientRect().top + window.scrollY - $(".tabbar").offsetHeight - 8;
+    const before = window.scrollY;
+    window.scrollTo({ top: y, behavior: reduceMotion ? "auto" : "smooth" });
+    // なめらかスクロールが効かない環境では、すぐに移動する
+    setTimeout(() => { if (window.scrollY === before && Math.abs(before - y) > 4) window.scrollTo(0, y); }, 600);
+  }
+  if (motion) enter(panel.children, 0.03);
   if (tab === "mission") maybeLoadMissions(); // お題をまだ覚えていなければ取りに行く（読めなかったときの開き直しも）
 }
 
@@ -1294,12 +1488,48 @@ $$(".mode button").forEach((b) => b.addEventListener("click", () => {
   if (b.dataset.mode === mode) return;
   mode = b.dataset.mode;
   store.set("mode", mode);
+  endJump(true); // 天気を変えるとスポットが入れ替わるので、飛んだ状態を終える
   renderAll();
   enter($("#next"));
   enter($(`#panel-${tab}`).children, 0.03);
   if (tab === "mission") maybeLoadMissions();
 }));
-$$(".tab").forEach((b) => b.addEventListener("click", () => showTab(b.dataset.tab)));
+$$(".tab").forEach((b) => b.addEventListener("click", () => {
+  if (b.dataset.tab !== tab) endJump(true); // 自分でタブを切り替えたら「← 行程に戻る」と #spot- を消す
+  showTab(b.dataset.tab);
+}));
+// 行程・「つぎはこれ」の「どんな場所？」とタイトル、スポットの「← 行程に戻る」（描き直しても効くように document で受ける）
+document.addEventListener("click", (e) => {
+  if (e.target.closest("[data-jump-back]")) { goBackFromSpot(); return; }
+  const a = e.target.closest("a[data-spot]");
+  if (!a || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; // 新しいタブで開くときはブラウザに任せる（#spot- の共有リンクとして開く）
+  if (!spotCard(a.dataset.spot)) return;
+  e.preventDefault();
+  openSpot(a.dataset.spot, { from: originOf(a), push: true });
+});
+// スマホの「戻る」（Android の戻る・iPhone のスワイプ）・「進む」・URL の #spot- の書き換え
+window.addEventListener("popstate", (e) => {
+  const st = e.state || {};
+  const id = hashSpot();
+  if (id) {
+    if (!jump || jump.id !== id) openSpot(id, { from: st.shioriSpot === id ? st.from : null });
+    return;
+  }
+  if (st.shioriFrom) { backToOrigin(st.shioriFrom); return; }
+  if (jump) endJump(false);
+});
+// #spot-<ID> 付きで開いたら、そのスポットを開いた状態で出す（共有リンク・スポットで開き直したとき）
+{
+  const st = history.state || {};
+  const id = hashSpot();
+  const nav = (performance.getEntriesByType && performance.getEntriesByType("navigation")[0]) || {};
+  if (id && spotCard(id)) {
+    history.scrollRestoration = "manual";
+    openSpot(id, { from: st.shioriSpot === id ? st.from : null, initial: true });
+  } else if (!id && st.shioriFrom && nav.type === "back_forward") {
+    backToOrigin(st.shioriFrom, { initial: true }); // スポットで開き直したあと「戻る」でここに来たとき
+  }
+}
 $("#panel-mission").addEventListener("click", (e) => {
   const b = e.target.closest("[data-retry]");
   if (b && photoQueue) photoQueue.retry(b.dataset.retry);
