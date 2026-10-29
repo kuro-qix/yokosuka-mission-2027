@@ -1,0 +1,1204 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0B2545">
+<meta name="description" content="QIX社員旅行 2027年2月9日 横須賀・猿島 旅のしおり">
+<title>横須賀ミッション｜QIX社員旅行 2027</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="横須賀ミッション">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0B2545;
+  --navy-2: #13315C;
+  --sea: #1D5C8F;
+  --sea-soft: #E4EEF7;
+  --brick: #B5482F;
+  --brick-dark: #8F3722;
+  --brick-soft: #F8E7E0;
+  --sand: #F6F1E7;
+  --card: #FFFFFF;
+  --ink: #0B2545;
+  --muted: #4A5A70;
+  --line: #D9DEE6;
+  --ok: #2E7D4F;
+  --ok-soft: #E3F2E8;
+  --rain: #3F5677;
+  --rain-soft: #E6EBF3;
+  --radius: 16px;
+  --tabbar-h: 64px;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--sand);
+  color: var(--ink);
+  font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 24px);
+}
+a { color: var(--sea); }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--brick); outline-offset: 2px; border-radius: 8px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.wrap { max-width: 560px; margin: 0 auto; padding: 0 16px; }
+.icon { width: 1.25em; height: 1.25em; flex: none; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -0.2em; }
+
+/* ---------- hero ---------- */
+.hero {
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 60%, var(--sea) 100%);
+  color: #fff;
+  padding: calc(env(safe-area-inset-top) + 20px) 0 64px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -1px; height: 40px;
+  background: var(--sand);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 40' preserveAspectRatio='none'%3E%3Cpath d='M0 20 Q50 0 100 20 T200 20 T300 20 T400 20 V40 H0Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 40' preserveAspectRatio='none'%3E%3Cpath d='M0 20 Q50 0 100 20 T200 20 T300 20 T400 20 V40 H0Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.eyebrow { font-size: 13px; letter-spacing: .12em; opacity: .85; margin: 0; }
+.hero h1 { font-size: 34px; line-height: 1.15; font-weight: 900; margin: 6px 0 4px; letter-spacing: .02em; }
+.hero h1 span { color: #F2B8A6; }
+.hero .date { font-size: 15px; margin: 0 0 16px; opacity: .92; }
+.mode {
+  display: inline-flex; background: rgba(255,255,255,.14); border-radius: 999px; padding: 4px; gap: 4px;
+}
+.mode button {
+  border: 0; background: transparent; color: #fff; border-radius: 999px;
+  min-height: 44px; padding: 0 16px; display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 700; cursor: pointer; transition: background .2s var(--ease), color .2s var(--ease);
+}
+.mode button[aria-pressed="true"] { background: #fff; color: var(--navy); }
+.mode-note { font-size: 13px; margin: 10px 0 0; opacity: .9; }
+
+/* ---------- next card ---------- */
+.next {
+  margin-top: -44px; position: relative; z-index: 2;
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(11, 37, 69, .14);
+  padding: 18px 18px 16px; border-left: 6px solid var(--brick);
+}
+.next.is-rain { border-left-color: var(--rain); }
+.next-label { font-size: 13px; font-weight: 700; color: var(--brick); margin: 0; letter-spacing: .06em; }
+.next.is-rain .next-label { color: var(--rain); }
+.next-time { font-size: 40px; font-weight: 900; line-height: 1.1; margin: 4px 0 2px; font-variant-numeric: tabular-nums; }
+.next-title { font-size: 19px; font-weight: 700; margin: 0; }
+.next-sub { color: var(--muted); margin: 4px 0 0; font-size: 15px; }
+.next-now { margin: 0 0 10px; padding: 8px 12px; background: var(--sea-soft); border-radius: 10px; font-size: 14px; }
+.next-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+/* ---------- buttons / chips ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--sea);
+  background: #fff; color: var(--sea); text-decoration: none; font-weight: 700; font-size: 15px; cursor: pointer;
+  transition: transform .15s var(--ease), background .2s var(--ease);
+}
+.btn:active { transform: scale(.97); }
+.btn.primary { background: var(--brick); border-color: var(--brick); color: #fff; }
+.btn.primary:hover { background: var(--brick-dark); }
+.btn.small { min-height: 40px; padding: 0 12px; font-size: 14px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border-radius: 999px;
+  font-size: 13px; font-weight: 700; background: var(--sea-soft); color: var(--navy-2); white-space: nowrap;
+}
+.chip.brick { background: var(--brick-soft); color: var(--brick-dark); }
+.chip.warn { background: #FFF1D6; color: #7A4A00; }
+.chip.ok { background: var(--ok-soft); color: var(--ok); }
+
+/* ---------- sections ---------- */
+main { padding-top: 20px; }
+.panel[hidden] { display: none; }
+.panel h2 { font-size: 22px; font-weight: 900; margin: 20px 0 6px; display: flex; align-items: center; gap: 8px; }
+.panel h3 { font-size: 17px; font-weight: 700; margin: 0; }
+.lead { color: var(--muted); margin: 0 0 14px; font-size: 15px; }
+.card { background: var(--card); border-radius: var(--radius); padding: 16px; margin: 0 0 12px; border: 1px solid var(--line); }
+.callout { border-radius: 12px; padding: 12px 14px; margin: 0 0 12px; font-size: 15px; display: flex; gap: 10px; }
+.callout.brick { background: var(--brick-soft); color: #5C2213; }
+.callout.rain { background: var(--rain-soft); color: #22324A; }
+.callout.sea { background: var(--sea-soft); color: var(--navy-2); }
+.callout p { margin: 0; }
+.callout strong { font-weight: 900; }
+
+/* ---------- timeline ---------- */
+.timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+.timeline::before { content: ""; position: absolute; left: 62px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+.tl { display: grid; grid-template-columns: 52px 1fr; gap: 0 22px; padding: 10px 0; position: relative; }
+.tl::before {
+  content: ""; position: absolute; left: 57px; top: 18px; width: 12px; height: 12px; border-radius: 50%;
+  background: #fff; border: 2px solid var(--sea);
+}
+.tl-time { font-weight: 900; font-size: 17px; font-variant-numeric: tabular-nums; padding-top: 4px; text-align: right; }
+.tl-body { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+.tl-title { font-weight: 700; font-size: 16px; margin: 0; }
+.tl-note { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+.tl-actions { margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap; }
+.tl.is-past { opacity: .55; }
+.tl.is-now::before { background: var(--brick); border-color: var(--brick); box-shadow: 0 0 0 5px rgba(181,72,47,.2); }
+.tl.is-now .tl-body { border: 2px solid var(--brick); }
+.tl.must .tl-body { border-left: 5px solid var(--brick); }
+
+/* ---------- spots ---------- */
+.spot-head { display: flex; align-items: flex-start; gap: 12px; }
+.spot-ico { width: 44px; height: 44px; border-radius: 12px; background: var(--sea-soft); color: var(--sea); display: grid; place-items: center; flex: none; }
+.spot-ico .icon { width: 22px; height: 22px; }
+.spot-name { font-size: 17px; font-weight: 700; margin: 0; }
+.spot-hours { margin: 2px 0 0; font-size: 15px; }
+.spot-hours b { font-size: 18px; font-weight: 900; color: var(--brick-dark); }
+.spot-meta { margin: 10px 0 0; padding: 0; list-style: none; font-size: 14px; color: var(--muted); }
+.spot-meta li { display: flex; gap: 6px; align-items: flex-start; padding: 2px 0; }
+.spot-meta .icon { margin-top: 3px; width: 16px; height: 16px; }
+details.about { margin-top: 10px; border-top: 1px dashed var(--line); padding-top: 8px; }
+details.about summary {
+  cursor: pointer; list-style: none; min-height: 44px; display: flex; align-items: center; gap: 6px;
+  font-weight: 700; color: var(--sea);
+}
+details.about summary::-webkit-details-marker { display: none; }
+details.about summary .chev { transition: transform .25s var(--ease); margin-left: auto; }
+details.about[open] summary .chev { transform: rotate(180deg); }
+details.about p { margin: 0 0 8px; font-size: 15px; }
+.spot-actions { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ---------- missions ---------- */
+.team-pick { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; }
+.team-pick button {
+  min-width: 44px; min-height: 44px; border-radius: 12px; border: 2px solid var(--line); background: #fff;
+  font-weight: 900; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; padding: 0 12px;
+}
+.team-pick button .dot { width: 12px; height: 12px; border-radius: 50%; }
+.team-pick button[aria-pressed="true"] { border-color: var(--navy); background: var(--navy); color: #fff; }
+.progress { display: flex; align-items: center; gap: 10px; margin: 6px 0 14px; }
+.progress-bar { flex: 1; height: 10px; background: #fff; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--sea), var(--brick)); border-radius: 999px; transition: width .4s var(--ease); }
+.progress-text { font-weight: 900; font-variant-numeric: tabular-nums; }
+.group-title { font-size: 15px; font-weight: 900; color: var(--muted); margin: 18px 0 8px; letter-spacing: .04em; }
+.mission { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: start; }
+.mission.done { background: #FBFDFB; border-color: #BFDCC9; }
+.check {
+  width: 44px; height: 44px; border-radius: 12px; border: 2px solid var(--line); background: #fff;
+  display: grid; place-items: center; cursor: pointer; color: transparent; padding: 0;
+}
+.check .icon { width: 26px; height: 26px; stroke-width: 3; }
+.check[aria-checked="true"] { background: var(--ok); border-color: var(--ok); color: #fff; }
+.mission-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.mission p { margin: 6px 0 0; font-size: 15px; }
+.mission .hint { color: var(--muted); font-size: 14px; }
+.mission .where { font-size: 13px; color: var(--muted); display: flex; gap: 4px; align-items: center; margin-top: 6px; }
+.answer { margin-top: 10px; }
+.answer label { font-size: 13px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 4px; }
+.answer input {
+  width: 100%; min-height: 44px; border-radius: 10px; border: 1.5px solid var(--line); padding: 8px 12px;
+  font: inherit; font-size: 16px; background: #fff;
+}
+.answer input:focus { border-color: var(--sea); outline: none; box-shadow: 0 0 0 3px rgba(29,92,143,.2); }
+.act-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 10px 0 4px; }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+.btn:disabled:active, .btn[aria-disabled="true"]:active { transform: none; }
+.btn.primary:disabled:hover, .btn.primary[aria-disabled="true"]:hover { background: var(--brick); }
+.form-err { margin: 6px 0 0; font-size: 14px; font-weight: 700; color: var(--brick-dark); }
+.form-err:empty { display: none; }
+.team-now { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 8px 0 0; }
+.team-now .dot { width: 14px; height: 14px; border-radius: 50%; flex: none; }
+.team-now strong { font-weight: 900; font-size: 17px; }
+.team-now .btn { margin-left: auto; }
+.card .note { color: var(--muted); font-size: 14px; margin: 6px 0 0; }
+.send-box { margin-top: 10px; }
+.sent-count { color: var(--muted); font-size: 14px; }
+.sent-count b { display: inline-block; color: var(--navy); font-size: 16px; font-weight: 900; font-variant-numeric: tabular-nums; }
+.send-rows { list-style: none; margin: 8px 0 0; padding: 0; }
+.send-keep { margin: 8px 0 0; font-size: 14px; }
+.send-keep p { margin: 0; font-size: 14px; }
+.callout[hidden], .note[hidden] { display: none; }
+.send-rows .btn, .team-now .btn { min-height: 44px; }
+.send-rows li { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 4px 0; border-top: 1px dashed var(--line); font-size: 14px; }
+.send-rows .row-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); }
+.send-rows .row-status { font-weight: 700; flex: none; max-width: 60%; }
+.send-rows li.failed .row-status { color: var(--brick-dark); white-space: normal; }
+.send-rows li.failed { flex-wrap: wrap; padding: 8px 0; }
+.send-rows li.failed .row-name { flex-basis: 100%; }
+.toast {
+  position: fixed; left: 50%; bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 16px);
+  transform: translateX(-50%); background: var(--navy); color: #fff; padding: 10px 16px; border-radius: 999px;
+  font-size: 14px; font-weight: 700; opacity: 0; pointer-events: none; transition: opacity .2s var(--ease); z-index: 30;
+}
+.toast.show { opacity: 1; }
+.lock-card { text-align: center; padding: 24px 16px 20px; }
+.lock-ico { width: 56px; height: 56px; border-radius: 16px; background: var(--sea-soft); color: var(--sea); display: grid; place-items: center; margin: 0 auto 12px; }
+.lock-ico .icon { width: 28px; height: 28px; }
+.lock-card p { margin: 0; font-size: 16px; font-weight: 700; }
+.peek { text-align: center; margin: 4px 0 0; }
+.peek-toggle {
+  border: 0; background: transparent; color: var(--muted); font-size: 13px; font-weight: 700; min-height: 44px; padding: 0 12px;
+  cursor: pointer; text-decoration: underline; text-underline-offset: 3px;
+}
+.peek-box { text-align: left; }
+.peek-box .answer { margin-top: 4px; }
+
+/* ---------- info ---------- */
+.list { margin: 0; padding: 0; list-style: none; }
+.list li { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.list li:last-child { border-bottom: 0; }
+.list .icon { margin-top: 4px; color: var(--brick); }
+.pack li { padding: 0; }
+.pack button {
+  width: 100%; display: flex; align-items: center; gap: 12px; min-height: 48px; border: 0; background: transparent;
+  text-align: left; cursor: pointer; padding: 4px 0; font-size: 15px;
+}
+.pack .box { width: 26px; height: 26px; border-radius: 8px; border: 2px solid var(--line); display: grid; place-items: center; color: transparent; flex: none; }
+.pack .box .icon { width: 18px; height: 18px; stroke-width: 3; margin: 0; }
+.pack button[aria-checked="true"] .box { background: var(--ok); border-color: var(--ok); color: #fff; }
+.pack button[aria-checked="true"] span:last-child { color: var(--muted); text-decoration: line-through; }
+.teams { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.team { border-radius: 12px; padding: 10px; color: #fff; font-weight: 900; text-align: center; font-size: 15px; }
+.footer { text-align: center; color: var(--muted); font-size: 13px; margin: 28px 0 0; }
+
+/* ---------- tab bar ---------- */
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  background: rgba(255,255,255,.96); backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom);
+}
+.tabbar-inner { max-width: 560px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+.tab {
+  height: var(--tabbar-h); border: 0; background: transparent; cursor: pointer; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2px; font-size: 12px; font-weight: 700; color: var(--muted); position: relative;
+}
+.tab .icon { width: 24px; height: 24px; }
+.tab[aria-selected="true"] { color: var(--brick); }
+.tab[aria-selected="true"]::before {
+  content: ""; position: absolute; top: 0; left: 28%; right: 28%; height: 3px; border-radius: 0 0 3px 3px; background: var(--brick);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">QIX 社員旅行 2027</p>
+    <h1>YOKOSUKA<br><span>MISSION</span></h1>
+    <p class="date">2027年2月9日（火）日帰り｜横須賀・猿島</p>
+    <div class="mode" role="group" aria-label="天気で行程を切り替える">
+      <button type="button" data-mode="sunny" aria-pressed="true"></button>
+      <button type="button" data-mode="rain" aria-pressed="false"></button>
+    </div>
+    <p class="mode-note" id="modeNote"></p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="next" id="next" aria-live="polite"></section>
+
+  <section class="panel" id="panel-route" data-panel="route" role="tabpanel" aria-labelledby="tab-route"></section>
+  <section class="panel" id="panel-spots" data-panel="spots" role="tabpanel" aria-labelledby="tab-spots" hidden></section>
+  <section class="panel" id="panel-mission" data-panel="mission" role="tabpanel" aria-labelledby="tab-mission" hidden></section>
+  <section class="panel" id="panel-info" data-panel="info" role="tabpanel" aria-labelledby="tab-info" hidden></section>
+
+  <p class="footer">QIX 社員旅行 幹事：宮垣・黒澤・長谷川</p>
+</main>
+
+<nav class="tabbar" aria-label="しおりのメニュー">
+  <div class="tabbar-inner" role="tablist">
+    <button class="tab" id="tab-route" role="tab" data-tab="route" aria-controls="panel-route" aria-selected="true"></button>
+    <button class="tab" id="tab-spots" role="tab" data-tab="spots" aria-controls="panel-spots" aria-selected="false"></button>
+    <button class="tab" id="tab-mission" role="tab" data-tab="mission" aria-controls="panel-mission" aria-selected="false"></button>
+    <button class="tab" id="tab-info" role="tab" data-tab="info" aria-controls="panel-info" aria-selected="false"></button>
+  </div>
+</nav>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module">
+/* ============================================================
+   データ（ここを直せば中身が変わる）
+   ============================================================ */
+const DAY = "2027-02-09";
+const API_URL = "https://script.google.com/macros/s/AKfycbyUx5S-KcGLCHEKnpCKjPbN1gGkE6Pr7OR_KKBHSQN9jZAzGbxJV2yWyNkmolwKm86SiA/exec"; // 受け取り口（GAS の /exec）。空のあいだは送信の準備中と出す
+const DEADLINE = new Date("2027-02-09T15:30:00+09:00");
+
+const ICONS = {
+  route: '<path d="M3 12h.01M3 18h.01M3 6h.01M8 12h13M8 18h13M8 6h13"/>',
+  map: '<path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/>',
+  pin: '<path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/>',
+  clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  flag: '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>',
+  bag: '<path d="M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 10h8"/><path d="M8 18h8"/><path d="M8 22v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>',
+  umbrella: '<path d="M22 12a10.06 10.06 1 0 0-20 0Z"/><path d="M12 12v8a2 2 0 0 0 4 0"/><path d="M12 2v1"/>',
+  check: '<polyline points="20 6 9 17 4 12"/>',
+  copy: '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+  ext: '<path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>',
+  ship: '<path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.9.94 5.34 2.81 7.76"/><path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6"/><path d="M12 10v4"/><path d="M12 2v3"/>',
+  alert: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+  chat: '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  quiz: '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',
+  camera: '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/>',
+  spark: '<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>',
+  food: '<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>',
+  store: '<path d="M2 7h20l-2 5H4z"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M9 22v-6h6v6"/>',
+  museum: '<path d="M3 22h18"/><path d="M6 18v-7"/><path d="M10 18v-7"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M12 2 20 7H4z"/>',
+  tree: '<path d="M12 22v-6"/><path d="M17 8a5 5 0 1 0-10 0 4 4 0 0 0-1 7.9h12A4 4 0 0 0 17 8z"/>',
+  island: '<path d="M2 20c2 0 2-1.5 4-1.5S8 20 10 20s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5"/><path d="M5 17c1-4 4-7 7-7s6 3 7 7"/><path d="M12 10V4"/><path d="M12 4c2 0 4 1 5 3"/>',
+  train: '<rect x="4" y="3" width="16" height="13" rx="3"/><path d="M4 11h16"/><path d="M8 20l-2 2"/><path d="M16 20l2 2"/><circle cx="8.5" cy="13.5" r=".5"/><circle cx="15.5" cy="13.5" r=".5"/>',
+  bowling: '<circle cx="12" cy="12" r="10"/><circle cx="9" cy="9" r="1"/><circle cx="13" cy="8" r="1"/><circle cx="12" cy="11.5" r="1"/>',
+  chev: '<polyline points="6 9 12 15 18 9"/>',
+  lock: '<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+};
+const ic = (n, cls = "icon") => `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ""}</svg>`;
+const mapUrl = (q) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+
+/* 行程（must=時間厳守） */
+const ROUTES = {
+  sunny: [
+    { t: "10:00", title: "ヴェルニー公園に集合", note: "全体説明・チーム発表、ミッション開始。記念館側の海沿いの一部は工事で立入禁止です", map: "ヴェルニー公園 横須賀", must: true },
+    { t: "10:15", title: "ヴェルニー記念館を見学（約25分）", note: "横須賀製鉄所と近代化を知る", map: "ヴェルニー記念館" },
+    { t: "10:40", title: "公園を散策しながら、どぶ板通りへ", note: "徒歩約10分。看板クイズに挑戦しながら", map: "どぶ板通り 横須賀" },
+    { t: "11:00", title: "昼食：TSUNAMI BOX", note: "2時間飲み放題付きヨコスカバーガー（ラストオーダーは90分）。三笠公園にはトイレがないので、ここで済ませておく", map: "TSUNAMI 横須賀市本町2-5-4" },
+    { t: "12:30", title: "三笠公園へ移動（徒歩約20分）", note: "出発前に、どぶ板通りのセブン-イレブン（本町2丁目店）で飲み物を。猿島には水道がありません", map: "三笠公園 横須賀" },
+    { t: "13:10", title: "三笠ターミナル（桟橋）で乗船列に並ぶ", note: "猿島の船は予約なし・並んだ順。全員でまとまって並ぶ。三笠公園の入口は猿島桟橋側の1か所だけ", map: "猿島航路 三笠ターミナル", must: true },
+    { t: "13:30", title: "三笠ターミナル発 → 猿島（約10分）", note: "船の上は冷えます", map: "猿島航路 三笠ターミナル" },
+    { t: "13:50", title: "猿島ミッション（約100分）", note: "チームで島を探検。立入禁止の場所・岩場には入らない", map: "猿島 横須賀" },
+    { t: "15:30", title: "猿島桟橋に集合・点呼", note: "写真の提出もここで締切", map: "猿島 桟橋", must: true },
+    { t: "16:00", title: "猿島発の最終便で三笠桟橋へ", note: "乗り遅れると島に残ってしまいます", map: "猿島 桟橋", must: true },
+    { t: "16:10", title: "三笠公園で表彰・全体写真", note: "", map: "三笠公園 横須賀" },
+    { t: "16:40", title: "現地解散", note: "京急 横須賀中央駅まで徒歩約15分。その後は自由", map: "横須賀中央駅" },
+  ],
+  rain: [
+    { t: "10:00", title: "東京テレポート駅に集合", note: "りんかい線。チーム発表", map: "東京テレポート駅", must: true },
+    { t: "10:30", title: "ラウンドワンでチーム対抗ボウリング", note: "ダイバーシティ東京 プラザ", map: "ラウンドワン ダイバーシティ東京プラザ店" },
+    { t: "12:15", title: "WOOD DESIGN PARK ODAIBAで室内BBQ（約90分）", note: "デックス東京ビーチ", map: "WOOD DESIGN PARK ODAIBA" },
+    { t: "14:00", title: "東京ジョイポリスでチーム対抗", note: "団体パスポート", map: "東京ジョイポリス" },
+    { t: "16:00", title: "表彰・全体写真、現地解散", note: "", map: "東京ジョイポリス" },
+  ],
+};
+
+/* スポット（hours は調査結果で更新） */
+const SPOTS = {
+  sunny: [
+    { icon: "tree", name: "ヴェルニー公園", hours: "いつでも", stay: "集合・散策", map: "ヴェルニー公園 横須賀",
+      notes: ["JR横須賀駅のすぐ前。京急汐入駅から徒歩約5分", "2027年3月15日まで海沿いの柵の改修工事中。記念館の前から続く海沿いの一部が立入禁止です（公園の中の広場や庭は入れます）"],
+      about: ["もとは「臨海公園」という名前で、横須賀製鉄所の建設を指揮したフランス人技師ヴェルニーにちなんで、フランス式庭園の様式に整え直されました（2002年完成）。フランスの品種を中心に、約130種類・約1,300株のバラが植えられています。", "海の向こうには、右手に米海軍の基地、左手に海上自衛隊の艦船が並び、軍港の街・横須賀らしい景色が見られます。", "ヴェルニーと、製鉄所の計画を立てた幕府の小栗上野介の胸像が並んでいます。小栗上野介は2027年のNHK大河ドラマの主人公です。戦艦「陸奥」の主砲も展示されています。"] },
+    { icon: "museum", name: "ヴェルニー記念館", hours: "9:00〜16:00", stay: "約25分", map: "ヴェルニー記念館",
+      notes: ["入館無料", "JR横須賀駅から徒歩1分"],
+      about: ["横須賀製鉄所の建設を指揮したフランス人技師ヴェルニーを記念する施設です。製鉄所は1865年に起工し、幕府の小栗上野介が計画を立て、技術をヴェルニーが担いました。日本の近代的なものづくりの出発点のひとつで、のちの横須賀海軍工廠です。当時のドックは今も米海軍横須賀基地の中で使われています。", "館内には、製鉄所で使われた1865年製のスチームハンマー2台（オランダから輸入、国の重要文化財）が展示されています。大きい3トンの方は、1996年まで約130年間動いていました。"] },
+    { icon: "store", name: "どぶ板通り", hours: "お店は10〜11時ごろから", stay: "歩いて通過", map: "どぶ板通り 横須賀",
+      notes: ["開店時間は店ごとに違い、11時開店の店が多いです", "火曜定休の店もあります"],
+      about: ["通りの真ん中を流れていたどぶ川に、海軍工廠から提供された厚い鉄板でふたをしたことが名前の由来です。", "戦後は横須賀に駐留した米軍の街として栄えました。今も英語の看板が並び、アメリカの雰囲気が残っています。歩道には有名人の手形も埋め込まれています。"] },
+    { icon: "food", name: "TSUNAMI BOX（昼食）", hours: "11:00〜22:00", stay: "11:00〜12:30", map: "TSUNAMI 横須賀市本町2-5-4",
+      notes: ["横須賀市本町2-5-4（どぶ板通り）", "2時間飲み放題付き（ラストオーダーは90分）", "1階はアメリカンなレストランバー、2階はメキシカン。チームごとに座ります", "三笠公園にトイレがないので、ここで済ませておく"],
+      about: ["ボリュームのあるハンバーガーとメキシコ料理の店です。横須賀名物のヨコスカネイビーバーガーが食べられます。"] },
+    { icon: "store", name: "セブン-イレブン 横須賀本町2丁目店", hours: "24時間", stay: "12:30の出発前に", map: "セブン-イレブン 横須賀本町2丁目店",
+      notes: ["横須賀市本町2-20-4（どぶ板通りのすぐ近く）", "猿島には水道がありません。飲み物はここで買っておく"], about: [] },
+    { icon: "ship", name: "三笠公園・記念艦三笠", hours: "公園 17:00まで", stay: "13:10に桟橋へ／16:10表彰", map: "三笠公園 横須賀",
+      notes: ["2027年3月末まで改修工事中。入口は猿島桟橋側の1か所だけ", "工事のため、公園内にトイレがありません", "記念艦三笠は9:00〜16:30（入艦は16:00まで）。艦内見学は今回の行程に入っていません"],
+      about: ["記念艦三笠は1902年にイギリスで完成した戦艦で、日露戦争の日本海海戦（1905年）で東郷平八郎司令長官が乗った連合艦隊の旗艦です。", "1926年から記念艦として保存されていて、イギリスの「ヴィクトリー」、アメリカの「コンスティチューション」と並ぶ世界三大記念艦のひとつです。", "三笠公園は1961年に開園。園内には東郷平八郎の像が立っています。"] },
+    { icon: "island", name: "猿島", hours: "最終便 16:00", stay: "13:40ごろ〜16:00", map: "猿島 横須賀",
+      notes: ["行きの船は三笠ターミナル発（毎時30分）、帰りの最終便は猿島発16:00", "島内に水道はありません。飲み物は持って渡ってください", "売店（Oceans Kitchen）は15:00まで", "トイレは2か所（桟橋の近くと管理棟の2階）"],
+      about: ["東京湾に浮かぶ唯一の自然の島で、湾内で最大の無人島です。名前は、霧で道に迷った日蓮上人を白い猿が島の奥へ案内した、という言い伝えから来ています。", "幕末には台場（砲台）が造られ、明治時代には首都・東京を守る陸軍の要塞が築かれました（1881年着工、1884年完成）。全国でも珍しいフランス積みのレンガのトンネルや砲台跡が残り、2015年に国の史跡になりました。", "苔むしたレンガの景色は、ファンタジー映画の世界のようだとよく言われます。"] },
+    { icon: "train", name: "京急 横須賀中央駅（解散後）", hours: "—", stay: "三笠公園から徒歩約15分", map: "横須賀中央駅",
+      notes: ["帰りはここから。快特・特急が停まります"], about: [] },
+  ],
+  rain: [
+    { icon: "train", name: "東京テレポート駅（りんかい線）", hours: "—", stay: "10:00集合", map: "東京テレポート駅",
+      notes: ["3施設とも駅から歩いて行けます"], about: [] },
+    { icon: "bowling", name: "ラウンドワン ダイバーシティ東京 プラザ店", hours: "2月は未公表", stay: "10:30〜", map: "ラウンドワン ダイバーシティ東京プラザ店",
+      notes: ["ダイバーシティ東京 プラザ6階。東京テレポート駅から徒歩約3分", "ボウリング2ゲーム（貸靴込み）", "参考：2026年11月の平日は朝8:00から営業"], about: [] },
+    { icon: "food", name: "WOOD DESIGN PARK ODAIBA", hours: "11:00〜23:00", stay: "12:15〜約90分", map: "WOOD DESIGN PARK ODAIBA",
+      notes: ["デックス東京ビーチ5階。東京テレポート駅から徒歩5分", "全部屋内の席のBBQ"], about: [] },
+    { icon: "spark", name: "東京ジョイポリス", hours: "2月は未公表", stay: "14:00〜16:00", map: "東京ジョイポリス",
+      notes: ["デックス東京ビーチ3〜5階。東京テレポート駅から徒歩5分", "団体パスポート", "参考：2026年11月の平日は11:00〜19:00"], about: [] },
+  ],
+};
+
+/* ミッション：お題（題・場所・ヒント・参考・点）はこのページに載せない（ソースを見ても分からないように）。
+   受け取り口が当日（MISSION_OPEN）から返す。ここに置くのは送信の仕組みに要る ID だけ（答えも載せない） */
+const MISSION_OPEN = new Date("2027-02-09T00:00:00+09:00");
+const QUIZ_IDS = ["q1", "q2", "q3"];
+const PHOTO_IDS = ["y1", "p1", "p2", "p3", "l1"];
+const MISSION_IDS = [...QUIZ_IDS, ...PHOTO_IDS];
+
+const TEAMS = [
+  { id: "A", color: "#C0392B" }, { id: "B", color: "#1F6FB2" }, { id: "C", color: "#2E7D4F" },
+  { id: "D", color: "#B7791F" }, { id: "E", color: "#6B3FA0" }, { id: "F", color: "#0E7C86" },
+];
+
+const PACK = ["スマホ（充電しておく）", "モバイルバッテリー", "交通系ICカード・現金", "飲み物（島に水道なし）", "防寒着・手袋・マフラー", "歩きやすい靴（スニーカー）", "常備薬", "ハンカチ・ティッシュ"];
+
+/* ============================================================
+   状態（このスマホの中だけに保存）
+   ============================================================ */
+const KEY = "yokosuka-mission-2027";
+const store = (() => {
+  let s = {};
+  try { s = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { s = {}; }
+  return {
+    get: (k, d) => (k in s ? s[k] : d),
+    set: (k, v) => { s[k] = v; try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} },
+  };
+})();
+
+const params = new URLSearchParams(location.search);
+if (params.get("mode") === "rain" || params.get("mode") === "sunny") store.set("mode", params.get("mode"));
+let mode = store.get("mode", "sunny");
+let tab = "route";
+
+/* ============================================================
+   Motion（読み込めなくても動く）
+   ============================================================ */
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let M = null;
+if (!reduceMotion) {
+  import("https://cdn.jsdelivr.net/npm/motion@11.11.13/+esm").then((m) => { M = m; }).catch(() => {});
+}
+const enter = (els, stagger = 0.04) => {
+  if (!M || !els) return;
+  const list = els.length !== undefined ? Array.from(els) : [els];
+  if (!list.length) return;
+  const a = M.animate(list, { opacity: [0, 1], y: [12, 0] }, { duration: 0.32, ease: [0.22, 1, 0.36, 1], delay: M.stagger(stagger) });
+  // アニメーションが途中で止まっても、中身が薄いまま残らないようにする
+  setTimeout(() => { try { a.complete(); } catch (e) {} }, 0.32 * 1000 + list.length * stagger * 1000 + 400);
+};
+const pop = (el) => {
+  if (!M || !el) return;
+  const a = M.animate(el, { scale: [0.8, 1.12, 1] }, { duration: 0.35, ease: [0.22, 1, 0.36, 1] });
+  setTimeout(() => { try { a.complete(); } catch (e) {} }, 800);
+};
+
+/* ============================================================
+   時刻（日本時間）
+   ============================================================ */
+function nowDate() {
+  const p = params.get("now"); // テスト用 ?now=2027-02-09T13:05
+  return p ? new Date(p + "+09:00") : new Date();
+}
+function jst(d) {
+  const f = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+  const o = Object.fromEntries(f.formatToParts(d).map((x) => [x.type, x.value]));
+  return { date: `${o.year}-${o.month}-${o.day}`, min: Number(o.hour) * 60 + Number(o.minute) };
+}
+const toMin = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+
+/* ============================================================
+   描画
+   ============================================================ */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+function renderModeButtons() {
+  const [b1, b2] = $$(".mode button");
+  b1.innerHTML = `${ic("sun")}晴天`;
+  b2.innerHTML = `${ic("umbrella")}雨天・強風`;
+  $$(".mode button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
+  $("#modeNote").textContent = mode === "rain"
+    ? "雨天・強風のため、行先がお台場に変わっています。"
+    : "雨天・強風のときは前日2/8（月）17時までにMessengerで連絡します。連絡が来たら「雨天・強風」に切り替えてください。";
+}
+
+function renderTabs() {
+  const labels = { route: ["route", "行程"], spots: ["map", "スポット"], mission: ["flag", "ミッション"], info: ["bag", "持ち物"] };
+  $$(".tab").forEach((b) => {
+    const [i, l] = labels[b.dataset.tab];
+    b.innerHTML = `${ic(i)}<span>${l}</span>`;
+    b.setAttribute("aria-selected", String(b.dataset.tab === tab));
+  });
+}
+
+function renderNext() {
+  const el = $("#next");
+  el.classList.toggle("is-rain", mode === "rain");
+  const items = ROUTES[mode];
+  const now = nowDate();
+  const j = jst(now);
+  let html = "";
+  if (j.date < DAY) {
+    const days = Math.ceil((new Date(DAY + "T00:00:00+09:00") - now) / 86400000);
+    const f = items[0];
+    html = `<p class="next-label">当日まで あと ${days} 日</p>
+      <p class="next-time">${f.t}</p>
+      <p class="next-title">${esc(f.title)}</p>
+      <p class="next-sub">${esc(f.note)}</p>
+      <div class="next-actions"><a class="btn primary" href="${mapUrl(f.map)}" target="_blank" rel="noopener">${ic("pin")}集合場所の地図</a></div>`;
+  } else if (j.date > DAY) {
+    html = `<p class="next-label">おつかれさまでした</p><p class="next-title">横須賀ミッション、ありがとうございました！</p>`;
+  } else {
+    let cur = -1;
+    items.forEach((it, i) => { if (toMin(it.t) <= j.min) cur = i; });
+    const nx = items[cur + 1];
+    const nowLine = cur >= 0 ? `<p class="next-now"><strong>いま：</strong>${esc(items[cur].title)}</p>` : "";
+    if (nx) {
+      html = `${nowLine}<p class="next-label">つぎはこれ</p>
+        <p class="next-time">${nx.t}</p>
+        <p class="next-title">${esc(nx.title)}</p>
+        ${nx.note ? `<p class="next-sub">${esc(nx.note)}</p>` : ""}
+        <div class="next-actions"><a class="btn primary" href="${mapUrl(nx.map)}" target="_blank" rel="noopener">${ic("pin")}地図を開く</a></div>`;
+    } else {
+      html = `${nowLine}<p class="next-label">今日の予定はここまで</p><p class="next-title">おつかれさまでした！気をつけて帰ってください</p>`;
+    }
+  }
+  el.innerHTML = html;
+}
+
+function renderRoute() {
+  const items = ROUTES[mode];
+  const j = jst(nowDate());
+  let cur = -1;
+  if (j.date === DAY) items.forEach((it, i) => { if (toMin(it.t) <= j.min) cur = i; });
+  const isDay = j.date === DAY;
+  const lis = items.map((it, i) => {
+    const cls = ["tl", it.must ? "must" : "", isDay && i < cur ? "is-past" : "", isDay && i === cur ? "is-now" : ""].join(" ");
+    return `<li class="${cls}">
+      <div class="tl-time">${it.t}</div>
+      <div class="tl-body">
+        <p class="tl-title">${esc(it.title)}${it.must ? ` <span class="chip brick">時間厳守</span>` : ""}</p>
+        ${it.note ? `<p class="tl-note">${esc(it.note)}</p>` : ""}
+        <div class="tl-actions"><a class="btn small" href="${mapUrl(it.map)}" target="_blank" rel="noopener">${ic("pin")}地図</a></div>
+      </div></li>`;
+  }).join("");
+  const top = mode === "rain"
+    ? `<div class="callout rain">${ic("umbrella")}<p><strong>雨天・強風の行程です。</strong>集合はりんかい線の東京テレポート駅です。</p></div>`
+    : `<div class="callout brick">${ic("alert")}<p><strong>猿島からの最終便は16:00。</strong>15:30の猿島桟橋集合は必ず守ってください。</p></div>`;
+  $("#panel-route").innerHTML = `<h2>${ic("route")}行程</h2>
+    <p class="lead">${mode === "rain" ? "お台場（雨天・強風時）" : "横須賀 → 猿島（晴天時）"}。地図ボタンでGoogleマップが開きます。</p>
+    ${top}<ol class="timeline">${lis}</ol>`;
+}
+
+function renderSpots() {
+  const cards = SPOTS[mode].map((s) => `
+    <article class="card spot">
+      <div class="spot-head">
+        <div class="spot-ico">${ic(s.icon)}</div>
+        <div>
+          <h3 class="spot-name">${esc(s.name)}</h3>
+          <p class="spot-hours">${ic("clock")} <b>${esc(s.hours)}</b></p>
+        </div>
+      </div>
+      <ul class="spot-meta">
+        <li>${ic("flag")}<span>${esc(s.stay)}</span></li>
+        ${s.notes.map((n) => `<li>${ic("alert")}<span>${esc(n)}</span></li>`).join("")}
+      </ul>
+      ${s.about.length ? `<details class="about"><summary>どんな場所？${ic("chev", "icon chev")}</summary>${s.about.map((p) => `<p>${esc(p)}</p>`).join("")}</details>` : ""}
+      <div class="spot-actions"><a class="btn small" href="${mapUrl(s.map)}" target="_blank" rel="noopener">${ic("pin")}地図を開く</a></div>
+    </article>`).join("");
+  $("#panel-spots").innerHTML = `<h2>${ic("map")}スポット</h2>
+    <p class="lead">何時まで開いているか、どんな場所かをまとめました。「どんな場所？」を押すと解説が開きます。</p>${cards}`;
+  $$("#panel-spots details.about").forEach((d) => d.addEventListener("toggle", () => { if (d.open) enter($$("p", d), 0.05); }));
+}
+
+/* ============================================================
+   送信（写真とクイズの答えを受け取り口へ）
+   合言葉はこのスマホにだけ保存する。ページには答えも合言葉も載せない
+   ============================================================ */
+const MSG_AUTH = "合言葉が違います。チームを選び直してください";
+const MSG_NEED_AUTH = "先にチームと合言葉を入れてください";
+const MSG_KEEP_OPEN = "送り終わるまで、この画面を閉じないでください";
+const MSG_LOAD_FAIL = "送信の部品を読み込めませんでした。ページを開き直してください";
+// send.js は後から読み込む（読み込めなくても、行程・スポット・持ち物とチェックは使える）
+let resizeImage = null, api = null, helloApi = null, photoQueue = null, quizQueue = null;
+let sendFailed = false;
+const hhmm = (d) => { const m = jst(d).min; return `${Math.floor(m / 60)}:${String(m % 60).padStart(2, "0")}`; };
+const isAuthErr = (err) => !!err && (err.code === "pass" || err.code === "team");
+const toCount = (v) => { const n = Math.floor(Number(v)); return Number.isFinite(n) && n >= 0 ? n : 0; };
+const keepOpenHtml = (attrs = "") => `<div class="callout brick send-keep"${attrs}>${ic("alert")}<p>${MSG_KEEP_OPEN}</p></div>`;
+function storedAuth() {
+  const a = API_URL ? store.get("auth", null) : null;
+  return a && typeof a === "object" && a.team && a.pass ? a : null;
+}
+const sendReady = () => !!photoQueue;
+const currentAuth = () => (sendReady() ? storedAuth() : null);
+const anyBusy = () => !!((photoQueue && photoQueue.busy()) || (quizQueue && quizQueue.busy()));
+// 枚数の時刻はミッションごと（{p1:"10:42"}）。以前の形（文字列ひとつ）は、どの枚数の時刻か分からないので捨てる
+function getCountsAt() {
+  const v = store.get("countsAt", {});
+  return v && typeof v === "object" && !Array.isArray(v) ? v : {};
+}
+function noAuthError() {
+  const e = new Error("チームと合言葉が入っていません");
+  e.code = "pass";
+  return e;
+}
+let pickTeam = null; // チームのカードで選んでいるチーム（「はじめる」まで保存しない）
+const photoHandled = new Set();
+const quizHandled = new Set();
+
+function setupSend(m) {
+  const mkApi = m.createApi, mkQueue = m.createQueue;
+  const photo = mkQueue({
+    async send(job) {
+      const auth = currentAuth();
+      if (!auth) throw noAuthError();
+      job.team = auth.team; // この送信で使ったチーム（返事の枚数をどのチームのものとして扱うか）
+      // 送り直すたびに作り直す。メモリを抑えるため1枚ずつ順番に縮める
+      const image = await resizeImage(job.file);
+      const thumb = await resizeImage(job.file, 480, 0.7);
+      return api({ action: "photo", team: auth.team, pass: auth.pass, sendId: job.sendId, mission: job.mission, image, thumb });
+    },
+    onChange: onPhotoChange,
+  });
+  const quiz = mkQueue({
+    async send(job) {
+      const auth = currentAuth();
+      if (!auth) throw noAuthError();
+      return api({ action: "quiz", team: auth.team, pass: auth.pass, sendId: job.sendId, answers: job.file });
+    },
+    onChange: onQuizChange,
+  });
+  resizeImage = m.resizeImage;
+  api = mkApi(API_URL);
+  helloApi = mkApi(API_URL, { timeoutMs: 20000 });
+  photoQueue = photo;
+  quizQueue = quiz;
+}
+if (API_URL) {
+  import("./send.js")
+    .then((m) => { setupSend(m); renderMissionsKeepingPass(); })
+    .catch((e) => { console.error(e); sendFailed = true; renderMissionsKeepingPass(); });
+}
+
+/* ============================================================
+   お題の読み込み（受け取り口の missions）
+   取れたらこのスマホに覚える（猿島の弱い電波でも開けるように）。幹事の下見で取ったお題は覚えない（メモリだけ）
+   ============================================================ */
+let peekMissions = null;  // 幹事の下見で取ったお題（ページを開き直すと消える）
+let missionsLoading = false;
+let missionsGate = "";    // "" まだ聞いていない・取れた／"lock" 受け取り口が「まだ」／"error" 読み込めなかった
+const peek = { open: false, busy: false, err: "" }; // 「幹事の下見」の入力欄
+const beforeOpen = () => nowDate() < MISSION_OPEN;
+
+// 受け取り口から来たお題を、描ける形にそろえる（知らない ID・題の無いもの・重複は捨てる。クイズかどうかは ID で決める）
+function cleanMissions(list) {
+  if (!Array.isArray(list)) return null;
+  const text = (v) => (typeof v === "string" ? v : "");
+  const seen = new Set(), out = [];
+  list.forEach((m) => {
+    if (!m || typeof m !== "object" || !MISSION_IDS.includes(m.id) || seen.has(m.id) || !text(m.title)) return;
+    seen.add(m.id);
+    out.push({
+      id: m.id, group: text(m.group), title: m.title, where: text(m.where), hint: text(m.hint),
+      pts: typeof m.pts === "number" && Number.isFinite(m.pts) ? m.pts : text(m.pts),
+      ref: /^https:\/\//.test(text(m.ref)) ? m.ref : "",
+      quiz: QUIZ_IDS.includes(m.id),
+    });
+  });
+  return out.length ? out : null;
+}
+const shownMissions = () => peekMissions || cleanMissions(store.get("missions", null));
+
+// 受け取り口にお題を聞く。返事は {ok:true, missions} か {ok:false, error:"notyet"} など（notyet は err.code に入れて投げる）。
+// send.js が読めなくてもお題は読めるよう、送信の部品（createApi）とは別に持つ
+async function askMissions(preview) {
+  if (!API_URL) throw new Error("受け取り口の URL がありません");
+  const ctrl = typeof AbortController === "function" ? new AbortController() : null;
+  const timer = setTimeout(() => { if (ctrl) ctrl.abort(); }, 20000);
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" }, // プリフライトを避ける（send.js と同じ）
+      body: JSON.stringify(preview === undefined ? { action: "missions" } : { action: "missions", preview }),
+      signal: ctrl ? ctrl.signal : undefined,
+      redirect: "follow",
+    });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    if (data && data.ok === true) {
+      const list = cleanMissions(data.missions);
+      if (!list) throw new Error("お題の形が違います");
+      return list;
+    }
+    const err = new Error("受け取り口のエラー: " + (data && data.error));
+    err.code = data && data.error;
+    throw err;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function loadMissions() {
+  if (missionsLoading) return;
+  missionsLoading = true;
+  renderMissionsKeepingPass();
+  try {
+    store.set("missions", await askMissions());
+    missionsGate = "";
+  } catch (e) {
+    console.error(e);
+    missionsGate = e && e.code === "notyet" ? "lock" : "error"; // notyet：このスマホの時計が進んでいるなど
+  } finally {
+    missionsLoading = false;
+  }
+  renderMissionsKeepingPass();
+  if (tab === "mission" && shownMissions()) enter($("#panel-mission").children, 0.03);
+}
+
+// 覚えたお題が無ければ取りに行く。雨天・公開前（このスマホの時計で）は取りに行かない
+function maybeLoadMissions() {
+  if (mode === "rain" || missionsLoading || beforeOpen() || shownMissions()) return;
+  loadMissions();
+}
+
+async function peekMissionsNow() {
+  const inp = $("#peekPass");
+  if (!inp || peek.busy) return;
+  const pass = inp.value.trim();
+  peek.err = pass ? "" : "合言葉を入れてください";
+  if (!pass) { renderMissionsKeepingPass(); return; }
+  peek.busy = true;
+  renderMissionsKeepingPass();
+  try {
+    peekMissions = await askMissions(pass);
+    peek.open = false; peek.err = "";
+  } catch (e) {
+    peek.err = e && e.code === "notyet" ? "合言葉が違います" : "つながりませんでした。電波のいい場所でもう一度押してください";
+  } finally {
+    peek.busy = false;
+  }
+  renderMissionsKeepingPass();
+  if (peekMissions) enter($("#panel-mission").children, 0.03);
+}
+
+// お題が出ていないときのミッション画面：公開前（鍵）・読み込み中・読み込めなかった
+function renderMissionGate(panel) {
+  const head = `<h2>${ic("flag")}ミッション</h2>`;
+  if (beforeOpen() || missionsGate === "lock") {
+    const box = peek.open ? `<div class="card peek-box" id="peekBox">
+        <div class="answer"><label for="peekPass">幹事の合言葉（12桁）</label><input id="peekPass" type="text" inputmode="numeric" autocomplete="off" aria-describedby="peekErr"></div>
+        <p class="form-err" id="peekErr" role="alert">${esc(peek.err)}</p>
+        <div class="act-row"><button type="button" class="btn primary" id="peekOpen"${peek.busy ? ` disabled aria-busy="true"` : ""}>${peek.busy ? "確認中…" : "ひらく"}</button></div>
+      </div>` : "";
+    panel.innerHTML = `${head}
+      <div class="card lock-card"><div class="lock-ico">${ic("lock")}</div><p>ミッションは当日のお楽しみ。2月9日（火）の朝に開きます。</p></div>
+      <div class="peek"><button type="button" class="peek-toggle" id="peekToggle" aria-expanded="${peek.open}"${peek.open ? ` aria-controls="peekBox"` : ""}>幹事の下見</button></div>
+      ${box}`;
+    $("#peekToggle").addEventListener("click", () => {
+      peek.open = !peek.open; peek.err = "";
+      renderMissionsKeepingPass();
+      if (peek.open) { enter($("#peekBox")); $("#peekPass").focus(); }
+    });
+    const open = $("#peekOpen");
+    if (open) {
+      open.addEventListener("click", peekMissionsNow);
+      $("#peekPass").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); peekMissionsNow(); } });
+    }
+    return;
+  }
+  if (missionsGate === "error" && !missionsLoading) {
+    panel.innerHTML = `${head}
+      <div class="card"><p style="margin:0">ミッションを読み込めませんでした。電波のいい場所で、もう一度開いてください。</p>
+        <div class="act-row"><button type="button" class="btn primary" id="missionsRetry">もう一度読み込む</button></div></div>`;
+    $("#missionsRetry").addEventListener("click", loadMissions);
+    return;
+  }
+  panel.innerHTML = `${head}<div class="card"><p class="note" style="margin:0">読み込み中…</p></div>`;
+}
+
+function renderMissions() {
+  const panel = $("#panel-mission");
+  if (mode === "rain") {
+    panel.innerHTML = `<h2>${ic("flag")}ミッション</h2>
+      <div class="callout rain">${ic("umbrella")}<p><strong>雨天・強風の日は、ボウリングとジョイポリスのチーム対抗で順位を決めます。</strong>横須賀・猿島のミッションはお休みです。</p></div>`;
+    return;
+  }
+  const missions = shownMissions();
+  if (!missions) { renderMissionGate(panel); return; }
+  const auth = currentAuth(); // 送れる状態（部品が読めて、チームと合言葉が入っている）
+  const joined = !sendFailed && storedAuth();
+  // 送るボタンの下に出す一言（読み込み中は何も出さない）
+  const blocked = sendFailed ? MSG_LOAD_FAIL : auth ? "" : (sendReady() || !API_URL) ? MSG_NEED_AUTH : "";
+  const checks = store.get("checks", {});
+  const answers = store.get("answers", {});
+  const done = MISSION_IDS.filter((id) => checks[id]).length;
+  let lastGroup = "";
+  const items = missions.map((m) => {
+    const g = m.group && m.group !== lastGroup ? `<p class="group-title">${esc(m.group)}</p>` : "";
+    lastGroup = m.group;
+    const pts = typeof m.pts === "number" ? `<span class="chip ${m.pts >= 3 ? "brick" : ""}">${m.pts}点</span>` : m.pts ? `<span class="chip brick">${esc(m.pts)}</span>` : "";
+    const send = m.quiz ? "" : `<div class="send-box">
+          <div class="act-row"><label class="btn primary" data-pick ${auth ? `role="button" tabindex="0"` : `aria-disabled="true"`}>${ic("camera")}写真を送る<input type="file" accept="image/*" multiple hidden data-photo="${m.id}"${auth ? "" : " disabled"}></label></div>
+          ${joined ? `<p class="sent-count" data-count="${m.id}">${countHtml(m.id)}</p>` : ""}
+          ${blocked ? `<p class="note">${blocked}</p>` : ""}
+          <div data-rows="${m.id}">${rowsHtml(m.id)}</div>
+        </div>`;
+    return `${g}<article class="card mission ${checks[m.id] ? "done" : ""}" data-id="${m.id}">
+      <button class="check" role="checkbox" aria-checked="${!!checks[m.id]}" aria-label="${esc(m.title)} をクリアした">${ic("check")}</button>
+      <div>
+        <div class="mission-top"><h3>${esc(m.title)}</h3>${pts}</div>
+        ${m.where ? `<p class="where">${ic("pin")}${esc(m.where)}</p>` : ""}
+        ${m.hint ? `<p class="hint">${esc(m.hint)}</p>` : ""}
+        ${m.quiz ? `<div class="answer"><label for="ans-${m.id}">チームの答え</label><input id="ans-${m.id}" data-ans="${m.id}" type="text" autocomplete="off" maxlength="200" value="${esc(answers[m.id] || "")}" placeholder="ここに入力"></div>` : ""}
+        ${m.ref ? `<p><a href="${esc(m.ref)}" target="_blank" rel="noopener">参考の投稿を見る（Instagram）${ic("ext")}</a></p>` : ""}
+        ${send}
+      </div></article>`;
+  }).join("");
+  panel.innerHTML = `<h2>${ic("flag")}ミッション</h2>
+    <p class="lead">チームで挑戦。写真とクイズの答えは、このページから<strong>15:30まで</strong>に送ってください。チームの誰が送っても、何枚送ってもOKです。</p>
+    ${nowDate() > DEADLINE ? `<div class="callout brick" id="deadlineNote">${ic("alert")}<p>締切（15:30）を過ぎました。いま送っても点数には入りません。</p></div>` : ""}
+    ${teamCardHtml()}
+    <div class="progress"><div class="progress-bar"><div class="progress-fill" style="width:${(done / MISSION_IDS.length) * 100}%"></div></div><span class="progress-text">${done} / ${MISSION_IDS.length}</span></div>
+    <div class="callout sea">${ic("alert")}<p>立入禁止の柵の中や、海辺の岩場には入らないでください。写真より安全が優先です。</p></div>
+    ${items}
+    <div class="card">
+      <h3>${ic("quiz")} クイズの答えを送る</h3>
+      <p class="note">入力した答えを、チームの答えとして送ります。直して送り直すと、最後に送った答えで採点します。空欄の問題は前の答えのまま残ります。</p>
+      <div class="act-row"><button class="btn primary" type="button" id="quizSend">答えを送る</button></div>
+      ${blocked ? `<p class="note">${blocked}</p>` : ""}
+      ${keepOpenHtml(` id="quizKeep" hidden`)}
+      <p class="form-err" id="quizErr" role="alert"></p>
+      <p class="note" id="quizAt"></p>
+    </div>`;
+  syncBusy();
+
+  // チーム
+  panel.querySelectorAll(".team-pick button").forEach((b) => b.addEventListener("click", () => {
+    pickTeam = b.dataset.team;
+    panel.querySelectorAll(".team-pick button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    $("#teamErr").textContent = "";
+    pop(b);
+  }));
+  const start = $("#teamStart");
+  if (start) {
+    start.addEventListener("click", startTeam);
+    $("#teamPass").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); startTeam(); } });
+  }
+  const change = $("#teamChange");
+  if (change) change.addEventListener("click", () => {
+    if (anyBusy()) return; // 送信中は変えない（ボタンも押せない）
+    store.set("auth", null); store.set("counts", {}); store.set("countsAt", {}); store.set("quizSentAt", "");
+    pickTeam = null;
+    renderMissions();
+    enter($("#teamCard"));
+  });
+
+  // 写真
+  panel.querySelectorAll("input[data-photo]").forEach((inp) => inp.addEventListener("change", () => {
+    const files = Array.from(inp.files || []);
+    inp.value = ""; // 同じ写真を選び直せるように
+    if (!currentAuth()) return;
+    // どのチームとして送ったかは send() が job.team に記録する
+    files.forEach((file) => photoQueue.add({ mission: inp.dataset.photo, file }));
+  }));
+  panel.querySelectorAll("label[data-pick][tabindex]").forEach((l) => l.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); l.querySelector("input").click(); }
+  }));
+
+  // チェック・クイズ
+  panel.querySelectorAll(".check").forEach((c) => c.addEventListener("click", () => {
+    const id = c.closest(".mission").dataset.id;
+    setMissionCheck(id, !store.get("checks", {})[id]);
+  }));
+  panel.querySelectorAll("input[data-ans]").forEach((inp) => inp.addEventListener("input", () => {
+    const a = store.get("answers", {});
+    a[inp.dataset.ans] = inp.value;
+    store.set("answers", a);
+    $("#quizErr").textContent = "";
+  }));
+  $("#quizSend").addEventListener("click", () => {
+    if (!quizQueue || !currentAuth()) return;
+    const a = store.get("answers", {});
+    const ans = {};
+    QUIZ_IDS.forEach((id) => { ans[id] = String(a[id] || "").trim(); });
+    if (!Object.values(ans).some((v) => v)) { $("#quizErr").textContent = "答えを入れてから送ってください"; return; }
+    $("#quizErr").textContent = "";
+    quizQueue.add({ mission: "quiz", file: ans });
+  });
+}
+
+// 描き直しても、入力途中の合言葉（チームの合言葉・幹事の下見）と入力中のカーソルを消さない
+function renderMissionsKeepingPass() {
+  const kept = ["teamPass", "peekPass"].map((id) => {
+    const inp = document.getElementById(id);
+    return inp ? { id, value: inp.value, focused: document.activeElement === inp } : null;
+  }).filter(Boolean);
+  renderMissions();
+  kept.forEach((k) => {
+    const next = document.getElementById(k.id);
+    if (!next) return;
+    if (k.value) next.value = k.value;
+    if (k.focused) next.focus();
+  });
+}
+
+function teamCardHtml() {
+  const head = `<h3>${ic("users")} あなたのチーム</h3>`;
+  if (!API_URL) return `<div class="card" id="teamCard">${head}<p class="note">送信の準備中です（当日までに使えるようになります）</p></div>`;
+  if (sendFailed) return `<div class="card" id="teamCard">${head}<p class="note">${MSG_LOAD_FAIL}</p></div>`;
+  const auth = storedAuth();
+  if (auth) {
+    const t = TEAMS.find((x) => x.id === auth.team);
+    return `<div class="card" id="teamCard">${head}
+      <div class="team-now"><span class="dot" style="background:${t ? t.color : "var(--navy)"}"></span><strong>チーム${esc(auth.team)} で参加中</strong><button type="button" class="btn small" id="teamChange">チームを変える</button></div>
+      <p class="note" id="teamChangeNote" hidden>送信中はチームを変えられません</p>
+    </div>`;
+  }
+  return `<div class="card" id="teamCard">${head}
+    <div class="team-pick" role="group" aria-label="チームを選ぶ">
+      ${TEAMS.map((t) => `<button type="button" data-team="${t.id}" aria-pressed="${pickTeam === t.id}"><span class="dot" style="background:${t.color}"></span>チーム${t.id}</button>`).join("")}
+    </div>
+    <div class="answer"><label for="teamPass">チームの合言葉（当日、幹事が伝えます）</label><input id="teamPass" type="text" inputmode="numeric" autocomplete="off" aria-describedby="teamErr"></div>
+    <p class="form-err" id="teamErr" role="alert"></p>
+    <div class="act-row"><button type="button" class="btn primary" id="teamStart"${sendReady() ? "" : " disabled"}>はじめる</button></div>
+  </div>`;
+}
+
+async function startTeam() {
+  const btn = $("#teamStart"), err = $("#teamErr");
+  if (!btn || btn.disabled || !helloApi) return;
+  const pass = $("#teamPass").value.trim();
+  if (!pickTeam) { err.textContent = "チームを選んでください"; return; }
+  if (!pass) { err.textContent = "合言葉を入れてください"; return; }
+  err.textContent = "";
+  btn.disabled = true; btn.textContent = "確認中…"; btn.setAttribute("aria-busy", "true");
+  const team = pickTeam;
+  try {
+    const res = await helloApi({ action: "hello", team, pass });
+    const counts = {}, at = {}, now = hhmm(nowDate());
+    PHOTO_IDS.forEach((id) => { counts[id] = toCount(res.counts && res.counts[id]); at[id] = now; });
+    store.set("auth", { team, pass });
+    store.set("counts", counts);
+    store.set("countsAt", at);
+    renderMissions();
+    const card = $("#teamCard");
+    if (card) { enter(card); pop(card.querySelector(".team-now .dot")); }
+  } catch (e) {
+    err.textContent = isAuthErr(e) ? "合言葉が違います。チームと合言葉を確かめてください" : "つながりませんでした。電波のいい場所でもう一度押してください";
+    btn.disabled = false; btn.textContent = "はじめる"; btn.removeAttribute("aria-busy");
+  }
+}
+
+function setMissionCheck(id, on) {
+  const ch = store.get("checks", {});
+  ch[id] = !!on;
+  store.set("checks", ch);
+  const panel = $("#panel-mission");
+  const card = panel.querySelector(`.mission[data-id="${id}"]`);
+  if (!card) return;
+  const c = card.querySelector(".check");
+  c.setAttribute("aria-checked", String(!!on));
+  card.classList.toggle("done", !!on);
+  const n = MISSION_IDS.filter((x) => ch[x]).length;
+  panel.querySelector(".progress-fill").style.width = `${(n / MISSION_IDS.length) * 100}%`;
+  panel.querySelector(".progress-text").textContent = `${n} / ${MISSION_IDS.length}`;
+  if (on) pop(c);
+}
+
+function countHtml(mission) {
+  const c = store.get("counts", {});
+  const n = toCount(c && typeof c === "object" ? c[mission] : 0);
+  const at = getCountsAt()[mission];
+  return n > 0 ? `チームで <b>${n}枚</b> 送信済み${typeof at === "string" && at ? `（${esc(at)} 時点）` : ""}` : "まだ送っていません";
+}
+
+// このスマホで送っている写真の行（届いたものは消える）。送っている間は「閉じないで」を出す
+function rowsHtml(mission) {
+  if (!photoQueue) return "";
+  const jobs = photoQueue.jobs().filter((j) => j.mission === mission && j.status !== "done");
+  if (!jobs.length) return "";
+  const busy = jobs.some((j) => j.status === "waiting" || j.status === "sending");
+  const lis = jobs.map((j) => {
+    const st = j.status === "waiting" ? "待機中" : j.status === "sending" ? "送信中…" : isAuthErr(j.error) ? MSG_AUTH : "送れませんでした";
+    const again = j.status === "failed" ? `<button type="button" class="btn small" data-retry="${esc(j.sendId)}">もう一度送る</button>` : "";
+    return `<li class="${j.status}"><span class="row-name">${esc((j.file && j.file.name) || "写真")}</span><span class="row-status">${st}</span>${again}</li>`;
+  }).join("");
+  return `<ul class="send-rows">${lis}</ul>${busy ? keepOpenHtml() : ""}`;
+}
+
+// 写真の送信がひとつ届いたとき。返事の枚数は、いま参加中のチームと同じときだけ使う
+function photoSent(job) {
+  const mission = job.mission, res = job.result || {};
+  const cur = currentAuth();
+  if (cur && job.team === cur.team) {
+    const counts = store.get("counts", {});
+    const c = counts && typeof counts === "object" ? counts : {};
+    c[mission] = toCount(res.count); // 重複（duplicate）でも枚数だけ使う。late は使わない
+    store.set("counts", c);
+    const at = getCountsAt();
+    at[mission] = hhmm(nowDate());
+    store.set("countsAt", at);
+    toast(`写真を送りました（チームで ${c[mission]}枚）`);
+  } else {
+    toast("写真を送りました");
+  }
+  setMissionCheck(mission, true);
+  const p = $(`#panel-mission [data-count="${mission}"]`);
+  if (p) { p.innerHTML = countHtml(mission); pop(p.querySelector("b")); }
+}
+
+function onPhotoChange(jobs) {
+  jobs.forEach((j) => {
+    if (j.status !== "done" || photoHandled.has(j.sendId)) return;
+    photoHandled.add(j.sendId);
+    photoSent(j);
+  });
+  PHOTO_IDS.forEach((id) => {
+    const box = $(`#panel-mission [data-rows="${id}"]`);
+    if (box) box.innerHTML = rowsHtml(id);
+  });
+  syncBusy();
+}
+
+function onQuizChange(jobs) {
+  jobs.forEach((j) => {
+    if ((j.status !== "done" && j.status !== "failed") || quizHandled.has(j.sendId)) return;
+    quizHandled.add(j.sendId);
+    if (j.status === "done") {
+      store.set("quizSentAt", hhmm(nowDate()));
+      toast("答えを送りました");
+    } else {
+      toast(isAuthErr(j.error) ? MSG_AUTH : "送れませんでした。もう一度押してください");
+    }
+  });
+  syncBusy();
+}
+
+// 送信中かどうかで変わる部分（チームを変える・クイズのボタン・閉じないでの一言）
+function syncBusy() {
+  const busy = anyBusy();
+  const change = $("#teamChange");
+  if (change) {
+    change.disabled = busy;
+    $("#teamChangeNote").hidden = !busy;
+  }
+  const btn = $("#quizSend");
+  if (!btn) return;
+  const quizBusy = !!(quizQueue && quizQueue.busy());
+  btn.disabled = quizBusy || !currentAuth();
+  btn.textContent = quizBusy ? "送信中…" : "答えを送る";
+  $("#quizKeep").hidden = !quizBusy;
+  const at = store.get("quizSentAt", "");
+  $("#quizAt").textContent = typeof at === "string" && at ? `最後に送った時刻 ${at}` : "";
+}
+
+function renderInfo() {
+  const packed = store.get("packed", {});
+  $("#panel-info").innerHTML = `<h2>${ic("bag")}持ち物・注意</h2>
+    <div class="card">
+      <h3>持ち物チェック</h3>
+      <ul class="list pack">${PACK.map((p, i) => `<li><button type="button" role="checkbox" aria-checked="${!!packed[i]}" data-pack="${i}"><span class="box">${ic("check")}</span><span>${esc(p)}</span></button></li>`).join("")}</ul>
+    </div>
+    <div class="card">
+      <h3>服装</h3>
+      <ul class="list">
+        <li>${ic("alert")}<span>2月の海の上と島はかなり冷えます。<strong>防寒着・手袋</strong>を忘れずに。</span></li>
+        <li>${ic("alert")}<span>猿島では約100分歩きます。<strong>スニーカーなど歩きやすい靴</strong>で来てください。</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>注意事項</h3>
+      <ul class="list">
+        <li>${ic("ship")}<span>猿島からの最終便は<strong>16:00</strong>。15:30の猿島桟橋集合は必ず守ってください。</span></li>
+        <li>${ic("alert")}<span>猿島には水道がありません。飲み物は渡る前に買っておきましょう。</span></li>
+        <li>${ic("alert")}<span>三笠公園は工事中で<strong>トイレがありません。</strong>昼食の店で済ませてから移動してください（猿島にはトイレが2か所あります）。</span></li>
+        <li>${ic("train")}<span>京急の<strong>快特は汐入駅に停まりません。</strong>汐入で降りる人は特急か普通に乗ってください（JR横須賀駅も集合場所のすぐ前です）。</span></li>
+        <li>${ic("alert")}<span>立入禁止の場所や、海辺の岩場には入らないでください。</span></li>
+        <li>${ic("food")}<span>お昼は飲み放題付きです。飲みすぎに注意して、午後の島歩きに備えてください。</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>交通費</h3>
+      <p style="margin:6px 0 0">現地集合・現地解散です。行き帰りの交通費は各自で立て替え、あとで実費精算します。乗った区間をメモしておいてください。</p>
+    </div>
+    <div class="card">
+      <h3>チーム</h3>
+      <p class="hint" style="margin:4px 0 10px;color:var(--muted);font-size:14px">メンバーは当日の全体説明で発表します。</p>
+      <div class="teams">${TEAMS.map((t) => `<div class="team" style="background:${t.color}">チーム${t.id}</div>`).join("")}</div>
+    </div>
+    <div class="card">
+      <h3>${ic("chat")} 困ったとき・遅れそうなとき</h3>
+      <p style="margin:6px 0 0">社員旅行のMessengerグループに連絡してください。幹事がすぐ返事をします。</p>
+    </div>
+    <div class="card">
+      <h3>解散後</h3>
+      <p style="margin:6px 0 0">帰宅・食事・散策など自由です。</p>
+    </div>`;
+  $$("#panel-info [data-pack]").forEach((b) => b.addEventListener("click", () => {
+    const p = store.get("packed", {});
+    p[b.dataset.pack] = !p[b.dataset.pack];
+    store.set("packed", p);
+    b.setAttribute("aria-checked", String(!!p[b.dataset.pack]));
+    if (p[b.dataset.pack]) pop(b.querySelector(".box"));
+  }));
+}
+
+function renderAll() {
+  renderModeButtons(); renderTabs(); renderNext();
+  renderRoute(); renderSpots(); renderMissions(); renderInfo();
+}
+
+function showTab(next) {
+  if (next === tab) return;
+  tab = next;
+  renderTabs();
+  $$(".panel").forEach((p) => { p.hidden = p.dataset.panel !== tab; });
+  const panel = $(`#panel-${tab}`);
+  // タブを押したら、そのタブの見出しが画面の上に来るようにする
+  const y = panel.getBoundingClientRect().top + window.scrollY - 8;
+  const before = window.scrollY;
+  window.scrollTo({ top: y, behavior: reduceMotion ? "auto" : "smooth" });
+  // なめらかスクロールが効かない環境では、すぐに移動する
+  setTimeout(() => { if (window.scrollY === before && Math.abs(before - y) > 4) window.scrollTo(0, y); }, 600);
+  enter(panel.children, 0.03);
+  if (tab === "mission") maybeLoadMissions(); // お題をまだ覚えていなければ取りに行く（読めなかったときの開き直しも）
+}
+
+let toastTimer = null;
+function toast(msg) {
+  const t = $("#toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+/* ============================================================
+   起動
+   ============================================================ */
+renderAll();
+maybeLoadMissions(); // 当日（公開時刻を過ぎていれば）、ページを開いたときにお題を取りに行く
+$$(".mode button").forEach((b) => b.addEventListener("click", () => {
+  if (b.dataset.mode === mode) return;
+  mode = b.dataset.mode;
+  store.set("mode", mode);
+  renderAll();
+  enter($("#next"));
+  enter($(`#panel-${tab}`).children, 0.03);
+  if (tab === "mission") maybeLoadMissions();
+}));
+$$(".tab").forEach((b) => b.addEventListener("click", () => showTab(b.dataset.tab)));
+$("#panel-mission").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-retry]");
+  if (b && photoQueue) photoQueue.retry(b.dataset.retry);
+});
+// 送っている途中で閉じようとしたら確認を出す
+window.addEventListener("beforeunload", (e) => {
+  if (!anyBusy()) return;
+  e.preventDefault();
+  e.returnValue = "";
+});
+setInterval(() => {
+  renderNext(); if (tab === "route") renderRoute();
+  // 開きっぱなしのまま締切を過ぎたら、ミッション画面に締切後の表示を出す（1回だけ描き直す）
+  if (mode !== "rain" && nowDate() > DEADLINE && shownMissions() && !$("#deadlineNote")) renderMissionsKeepingPass();
+  // 開きっぱなしのまま公開時刻を過ぎたら、お題を取りに行く（読めなかった・「まだ」と言われたときは、開き直しかボタンで）
+  if (!missionsGate) maybeLoadMissions();
+}, 30000);
+</script>
+</body>
+</html>
