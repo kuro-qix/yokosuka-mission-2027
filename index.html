@@ -175,6 +175,16 @@ details.about summary .chev { transition: transform .25s var(--ease); margin-lef
 details.about[open] summary .chev { transform: rotate(180deg); }
 details.about p { margin: 0 0 8px; font-size: 15px; }
 .spot-actions { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+/* スポットのイラスト（4:3）。箱の大きさは先に決まるので、読み込んでも下がずれない。読むまでは、しおりの色の地に紺のアイコン */
+.spot-fig { position: relative; aspect-ratio: 4 / 3; margin: 0 0 12px; border-radius: 12px; overflow: hidden; background: var(--sea-soft); color: var(--navy); }
+.spot-fig-ph { position: absolute; inset: 0; display: grid; place-items: center; }
+.spot-fig-ph .icon { width: clamp(48px, 20%, 128px); height: auto; aspect-ratio: 1; stroke-width: 1.5; }
+.spot-fig img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.spot-fig.is-broken img { display: none; }
+/* スマホ：イラストの無いスポット・画像が読めなかったときは何も出さない */
+.spot-fig.no-img, .spot-fig.is-broken { display: none; }
+/* パソコンだけで使う部分（スポットの一覧・開いたままの解説・パソコン向けの説明文） */
+.spot-list, .about-full, .only-pc { display: none; }
 
 /* ---------- 行程 → スポットの「どんな場所？」へ飛ぶ ---------- */
 /* 行程のタイトル：押せることが分かる程度の下線。押せる高さは上下の余白で 44px に（行の高さ・見た目は変えない） */
@@ -375,22 +385,86 @@ details.about p { margin: 0 0 8px; font-size: 15px; }
   .panel { grid-column: 1; grid-row: 1; min-width: 0; padding-top: 16px; }
   .panel h2 { margin-top: 0; font-size: 26px; }
   .footer { grid-column: 1 / -1; grid-row: 2; }
+  /* 「つぎはこれ」は行程のタブだけ。ほかのタブは、右の列の場所まで本文の横幅いっぱいを使う */
+  main.wrap:not([data-tab="route"]) { grid-template-columns: minmax(0, 1fr); }
+  main.wrap:not([data-tab="route"]) > .next { display: none; }
+  .panel .lead { max-width: 48em; }
   .card { margin-bottom: 16px; }
   .btn.small { min-height: 44px; }
+  .only-pc { display: inline; }
+  .only-sp { display: none; }
 
   /* 行程：時刻の線はそのまま。カードを広くして、地図ボタンを右に */
   .tl-body { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; align-items: center; padding: 14px 18px; }
   .tl-title, .tl-note { grid-column: 1; }
   .tl-actions { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; }
 
-  /* スポット・ミッション：カードを2列に（見出し・説明・チーム・送信のカードは横幅いっぱい） */
-  #panel-spots:not([hidden]), #panel-mission:not([hidden]) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; }
-  #panel-spots > *, #panel-mission > * { grid-column: 1 / -1; }
-  #panel-spots > .spot, #panel-mission > .mission { grid-column: auto; }
+  /* ミッション：お題のカードは横幅に合わせて2〜3列（見出し・説明・チーム・送信のカードは横幅いっぱい） */
+  #panel-mission:not([hidden]) { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); column-gap: 16px; }
+  #panel-mission > * { grid-column: 1 / -1; }
+  #panel-mission > .mission { grid-column: auto; }
   #panel-mission > .group-title { margin-top: 8px; }
-  /* 並んだスポットのカードは高さがそろうので、「どんな場所？」と地図ボタンを下にそろえる */
-  #panel-spots > .spot { display: flex; flex-direction: column; }
-  #panel-spots .spot-meta { margin-bottom: auto; }
+  #panel-mission .answer { max-width: 420px; }
+  #panel-mission .note { max-width: 48em; }
+
+  /* スポット：左に一覧（見出し・説明の下。スクロールしても残る）、右に選んだ1つを大きく */
+  #panel-spots:not([hidden]) {
+    display: grid; grid-template-columns: 300px minmax(0, 1fr); grid-template-rows: auto auto 1fr;
+    column-gap: 32px; align-items: start;
+  }
+  #panel-spots > h2 { grid-column: 1; grid-row: 1; }
+  #panel-spots > .lead { grid-column: 1; grid-row: 2; }
+  .spot-list {
+    display: block; grid-column: 1; grid-row: 3; margin: 2px -6px 0; padding: 6px;
+    position: sticky; top: calc(var(--hd-total) + 16px); max-height: calc(100vh - var(--hd-total) - 32px); overflow-y: auto;
+  }
+  .spot-list ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .spot-pick {
+    width: 100%; min-height: 68px; display: flex; align-items: center; gap: 12px; padding: 8px 12px 8px 10px;
+    border: 0; border-radius: 14px; background: transparent; text-align: left; cursor: pointer;
+    transition: background .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .spot-pick:hover { background: var(--card); }
+  .spot-pick:focus-visible { border-radius: 14px; }
+  /* 選んでいる行：レンガ色の地と左の線（色だけに頼らず、線と太さでも分かる） */
+  .spot-pick[aria-current="true"] { background: var(--brick-soft); box-shadow: inset 4px 0 0 var(--brick); }
+  .spot-pick[aria-current="true"] .spot-pick-name { color: var(--brick-dark); font-weight: 900; }
+  .spot-thumb {
+    position: relative; width: 52px; height: 52px; border-radius: 12px; overflow: hidden; flex: none;
+    background: var(--sea-soft); color: var(--sea); display: grid; place-items: center;
+  }
+  .spot-thumb .icon { width: 24px; height: 24px; }
+  .spot-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .spot-thumb.is-broken img { display: none; }
+  .spot-pick-text { min-width: 0; }
+  .spot-pick-name { display: block; font-size: 15px; font-weight: 700; line-height: 1.4; }
+  .spot-pick-hours { display: flex; align-items: center; gap: 4px; margin-top: 2px; font-size: 13px; color: var(--muted); line-height: 1.4; }
+  .spot-pick-hours .icon { width: 14px; height: 14px; }
+
+  .spot-cards { grid-column: 2; grid-row: 1 / span 3; min-width: 0; }
+  #panel-spots .spot:not(.is-sel) { display: none; }
+  #panel-spots .spot { position: relative; margin: 0; padding: 20px 20px 24px; border-radius: 20px; }
+  /* パソコンでは横長に切り取り、名前と営業時間が最初の画面に入るようにする（絵は4:3。主役は中央） */
+  #panel-spots .spot-fig { margin: 0 0 22px; border-radius: 14px; aspect-ratio: 16 / 9; max-height: 52vh; }
+  #panel-spots .spot-fig.no-img, #panel-spots .spot-fig.is-broken { display: block; }
+  #panel-spots .spot-head { display: block; }
+  #panel-spots .spot-ico { display: none; }
+  #panel-spots .spot-name { font-size: 32px; font-weight: 900; line-height: 1.3; letter-spacing: .02em; }
+  #panel-spots .spot-hours {
+    display: inline-flex; align-items: center; gap: 6px; margin: 10px 0 0; padding: 4px 14px;
+    border-radius: 999px; background: var(--brick-soft); color: var(--brick-dark); font-size: 14px; font-weight: 700;
+  }
+  #panel-spots .spot-hours b { font-size: 17px; }
+  #panel-spots .spot-meta { margin-top: 16px; font-size: 15px; }
+  #panel-spots .spot-meta .icon { margin-top: 4px; }
+  #panel-spots details.about { display: none; }
+  #panel-spots .about-full { display: block; margin-top: 20px; padding-top: 18px; border-top: 1px dashed var(--line); }
+  .about-title { display: flex; align-items: center; gap: 6px; margin: 0 0 8px; font-size: 18px; font-weight: 900; color: var(--sea); }
+  .about-full p { margin: 0 0 12px; max-width: 42em; font-size: 17px; line-height: 1.9; }
+  #panel-spots .spot-actions { margin-top: 20px; }
+  #panel-spots .spot-actions .btn { min-height: 48px; padding: 0 22px; font-size: 16px; }
+  /* 行程から来たときの「← 行程に戻る」は、イラストの左上に重ねる（下の中身を押し下げない） */
+  #panel-spots .spot > .jump-back { position: absolute; top: 32px; left: 32px; z-index: 1; margin: 0; box-shadow: 0 4px 14px rgba(11, 37, 69, .2); }
 
   /* 持ち物：持ち物チェックと注意を2列に（左の列から順に流す） */
   #panel-info:not([hidden]) { columns: 2; column-gap: 16px; }
@@ -442,7 +516,7 @@ details.about p { margin: 0 0 8px; font-size: 15px; }
   </div>
 </header>
 
-<main class="wrap">
+<main class="wrap" data-tab="route">
   <section class="next" id="next" aria-live="polite"></section>
 
   <nav class="tabbar" aria-label="しおりのメニュー">
@@ -533,24 +607,24 @@ const ROUTES = {
 /* スポット（hours は調査結果で更新） */
 const SPOTS = {
   sunny: [
-    { id: "verny-park", icon: "tree", name: "ヴェルニー公園", hours: "いつでも", stay: "集合・散策", map: "ヴェルニー公園 横須賀",
+    { id: "verny-park", icon: "tree", name: "ヴェルニー公園", hours: "いつでも", stay: "集合・散策", map: "ヴェルニー公園 横須賀", img: "ヴェルニー公園のイラスト。噴水とバラの庭の向こうに、海と艦船が見える",
       notes: ["JR横須賀駅のすぐ前。京急汐入駅から徒歩約5分", "2027年3月15日まで海沿いの柵の改修工事中。記念館の前から続く海沿いの一部が立入禁止です（公園の中の広場や庭は入れます）"],
       about: ["もとは「臨海公園」という名前で、横須賀製鉄所の建設を指揮したフランス人技師ヴェルニーにちなんで、フランス式庭園の様式に整え直されました（2002年完成）。フランスの品種を中心に、約130種類・約1,300株のバラが植えられています。", "海の向こうには、右手に米海軍の基地、左手に海上自衛隊の艦船が並び、軍港の街・横須賀らしい景色が見られます。", "ヴェルニーと、製鉄所の計画を立てた幕府の小栗上野介の胸像が並んでいます。小栗上野介は2027年のNHK大河ドラマの主人公です。戦艦「陸奥」の主砲も展示されています。"] },
-    { id: "verny-museum", icon: "museum", name: "ヴェルニー記念館", hours: "9:00〜16:00", stay: "約25分", map: "ヴェルニー記念館",
+    { id: "verny-museum", icon: "museum", name: "ヴェルニー記念館", hours: "9:00〜16:00", stay: "約25分", map: "ヴェルニー記念館", img: "ヴェルニー記念館のイラスト。大きな窓の館内に、スチームハンマーが展示されている",
       notes: ["入館無料", "JR横須賀駅から徒歩1分"],
       about: ["横須賀製鉄所の建設を指揮したフランス人技師ヴェルニーを記念する施設です。製鉄所は1865年に起工し、幕府の小栗上野介が計画を立て、技術をヴェルニーが担いました。日本の近代的なものづくりの出発点のひとつで、のちの横須賀海軍工廠です。当時のドックは今も米海軍横須賀基地の中で使われています。", "館内には、製鉄所で使われた1865年製のスチームハンマー2台（オランダから輸入、国の重要文化財）が展示されています。大きい3トンの方は、1996年まで約130年間動いていました。"] },
-    { id: "dobuita", icon: "store", name: "どぶ板通り", hours: "お店は10〜11時ごろから", stay: "歩いて通過", map: "どぶ板通り 横須賀",
+    { id: "dobuita", icon: "store", name: "どぶ板通り", hours: "お店は10〜11時ごろから", stay: "歩いて通過", map: "どぶ板通り 横須賀", img: "どぶ板通りのイラスト。英語の看板と星条旗が並ぶ通り",
       notes: ["開店時間は店ごとに違い、11時開店の店が多いです", "火曜定休の店もあります"],
       about: ["通りの真ん中を流れていたどぶ川に、海軍工廠から提供された厚い鉄板でふたをしたことが名前の由来です。", "戦後は横須賀に駐留した米軍の街として栄えました。今も英語の看板が並び、アメリカの雰囲気が残っています。歩道には有名人の手形も埋め込まれています。"] },
-    { id: "tsunami-box", icon: "food", name: "TSUNAMI BOX（昼食）", hours: "11:00〜22:00", stay: "11:00〜12:30", map: "TSUNAMI 横須賀市本町2-5-4",
+    { id: "tsunami-box", icon: "food", name: "TSUNAMI BOX（昼食）", hours: "11:00〜22:00", stay: "11:00〜12:30", map: "TSUNAMI 横須賀市本町2-5-4", img: "TSUNAMI BOXのイラスト。テーブルにハンバーガーとポテト",
       notes: ["横須賀市本町2-5-4（どぶ板通り）", "2時間飲み放題付き（ラストオーダーは90分）", "1階はアメリカンなレストランバー、2階はメキシカン。チームごとに座ります", "三笠公園にトイレがないので、ここで済ませておく"],
       about: ["ボリュームのあるハンバーガーとメキシコ料理の店です。横須賀名物のヨコスカネイビーバーガーが食べられます。"] },
     { id: "seven-eleven", icon: "store", name: "セブン-イレブン 横須賀本町2丁目店", hours: "24時間", stay: "12:30の出発前に", map: "セブン-イレブン 横須賀本町2丁目店",
       notes: ["横須賀市本町2-20-4（どぶ板通りのすぐ近く）", "猿島には水道がありません。飲み物はここで買っておく"], about: [] },
-    { id: "mikasa-park", icon: "ship", name: "三笠公園・記念艦三笠", hours: "公園 17:00まで", stay: "13:10に桟橋へ／16:10表彰", map: "三笠公園 横須賀",
+    { id: "mikasa-park", icon: "ship", name: "三笠公園・記念艦三笠", hours: "公園 17:00まで", stay: "13:10に桟橋へ／16:10表彰", map: "三笠公園 横須賀", img: "三笠公園のイラスト。海沿いの芝生の先に、記念艦三笠が停泊している",
       notes: ["2027年3月末まで改修工事中。入口は猿島桟橋側の1か所だけ", "工事のため、公園内にトイレがありません", "記念艦三笠は9:00〜16:30（入艦は16:00まで）。艦内見学は今回の行程に入っていません"],
       about: ["記念艦三笠は1902年にイギリスで完成した戦艦で、日露戦争の日本海海戦（1905年）で東郷平八郎司令長官が乗った連合艦隊の旗艦です。", "1926年から記念艦として保存されていて、イギリスの「ヴィクトリー」、アメリカの「コンスティチューション」と並ぶ世界三大記念艦のひとつです。", "三笠公園は1961年に開園。園内には東郷平八郎の像が立っています。"] },
-    { id: "sarushima", icon: "island", name: "猿島", hours: "最終便 16:00", stay: "13:40ごろ〜16:00", map: "猿島 横須賀",
+    { id: "sarushima", icon: "island", name: "猿島", hours: "最終便 16:00", stay: "13:40ごろ〜16:00", map: "猿島 横須賀", img: "猿島のイラスト。船から見た、緑に覆われた島",
       notes: ["行きの船は三笠ターミナル発（毎時30分）、帰りの最終便は猿島発16:00", "島内に水道はありません。飲み物は持って渡ってください", "売店（Oceans Kitchen）は15:00まで", "トイレは2か所（桟橋の近くと管理棟の2階）"],
       about: ["東京湾に浮かぶ唯一の自然の島で、湾内で最大の無人島です。名前は、霧で道に迷った日蓮上人を白い猿が島の奥へ案内した、という言い伝えから来ています。", "幕末には台場（砲台）が造られ、明治時代には首都・東京を守る陸軍の要塞が築かれました（1881年着工、1884年完成）。全国でも珍しいフランス積みのレンガのトンネルや砲台跡が残り、2015年に国の史跡になりました。", "苔むしたレンガの景色は、ファンタジー映画の世界のようだとよく言われます。"] },
     { id: "yokosuka-chuo", icon: "train", name: "京急 横須賀中央駅（解散後）", hours: "—", stay: "三笠公園から徒歩約15分", map: "横須賀中央駅",
@@ -559,11 +633,11 @@ const SPOTS = {
   rain: [
     { id: "tokyo-teleport", icon: "train", name: "東京テレポート駅（りんかい線）", hours: "—", stay: "10:00集合", map: "東京テレポート駅",
       notes: ["3施設とも駅から歩いて行けます"], about: [] },
-    { id: "round-one", icon: "bowling", name: "ラウンドワン ダイバーシティ東京 プラザ店", hours: "2月は未公表", stay: "10:30〜", map: "ラウンドワン ダイバーシティ東京プラザ店",
+    { id: "round-one", icon: "bowling", name: "ラウンドワン ダイバーシティ東京 プラザ店", hours: "2月は未公表", stay: "10:30〜", map: "ラウンドワン ダイバーシティ東京プラザ店", img: "ラウンドワンのイラスト。ボウリングのレーンとボール",
       notes: ["ダイバーシティ東京 プラザ6階。東京テレポート駅から徒歩約3分", "ボウリング2ゲーム（貸靴込み）", "参考：2026年11月の平日は朝8:00から営業"], about: [] },
-    { id: "wood-design-park", icon: "food", name: "WOOD DESIGN PARK ODAIBA", hours: "11:00〜23:00", stay: "12:15〜約90分", map: "WOOD DESIGN PARK ODAIBA",
+    { id: "wood-design-park", icon: "food", name: "WOOD DESIGN PARK ODAIBA", hours: "11:00〜23:00", stay: "12:15〜約90分", map: "WOOD DESIGN PARK ODAIBA", img: "WOOD DESIGN PARK ODAIBAのイラスト。窓の外にレインボーブリッジが見える店内のBBQ",
       notes: ["デックス東京ビーチ5階。東京テレポート駅から徒歩5分", "全部屋内の席のBBQ"], about: [] },
-    { id: "joypolis", icon: "spark", name: "東京ジョイポリス", hours: "2月は未公表", stay: "14:00〜16:00", map: "東京ジョイポリス",
+    { id: "joypolis", icon: "spark", name: "東京ジョイポリス", hours: "2月は未公表", stay: "14:00〜16:00", map: "東京ジョイポリス", img: "東京ジョイポリスのイラスト。屋内をジェットコースターが走る",
       notes: ["デックス東京ビーチ3〜5階。東京テレポート駅から徒歩5分", "団体パスポート", "参考：2026年11月の平日は11:00〜19:00"], about: [] },
   ],
 };
@@ -660,6 +734,7 @@ function renderTabs() {
     b.innerHTML = `${ic(i)}<span>${l}</span>`;
     b.setAttribute("aria-selected", String(b.dataset.tab === tab));
   });
+  $("main").dataset.tab = tab; // パソコンでは、行程のタブのときだけ右に「つぎはこれ」を出す（CSS）
 }
 
 function renderNext() {
@@ -724,9 +799,27 @@ function renderRoute() {
     ${top}<ol class="timeline">${lis}</ol>`;
 }
 
+/* スポットのイラスト：img/spots/<ID>.webp（横 1200px、パソコン）と <ID>-s.webp（横 640px、スマホと一覧の小さな絵）。
+   img（画像の説明文）があるスポットだけ読みに行く */
+const spotImg = (s, big) => `img/spots/${s.id}${big ? "" : "-s"}.webp`;
+const pcMQ = matchMedia("(min-width: 960px)");
+const isPC = () => pcMQ.matches;
+let spotSel = ""; // パソコンのスポットの一覧で選んでいるスポット（天気を変えて見つからなければ先頭）
+
 function renderSpots() {
-  const cards = SPOTS[mode].map((s) => `
-    <article class="card spot" data-spot-id="${s.id}">
+  const list = SPOTS[mode];
+  if (!list.some((s) => s.id === spotSel)) spotSel = list[0].id;
+  // 箱は 4:3 で先に場所を取る。画像が無い・読めないときは、しおりの色の地に紺のアイコン（スマホでは箱ごと出さない）
+  const fig = (s) => `<div class="spot-fig${s.img ? "" : " no-img"}"><span class="spot-fig-ph" aria-hidden="true">${ic(s.icon)}</span>${s.img
+    ? `<picture><source media="(min-width: 960px)" srcset="${spotImg(s, true)}" width="1200" height="900"><img src="${spotImg(s)}" width="640" height="480" loading="lazy" decoding="async" alt="${esc(s.img)}"></picture>`
+    : ""}</div>`;
+  const picks = list.map((s) => `<li><button type="button" class="spot-pick" data-pick-spot="${s.id}" aria-controls="spot-card-${s.id}"${s.id === spotSel ? ` aria-current="true"` : ""}>
+      <span class="spot-thumb" aria-hidden="true">${ic(s.icon)}${s.img ? `<img src="${spotImg(s)}" width="52" height="52" loading="lazy" decoding="async" alt="">` : ""}</span>
+      <span class="spot-pick-text"><span class="spot-pick-name">${esc(s.name)}</span><span class="spot-pick-hours">${ic("clock")}${esc(s.hours)}</span></span>
+    </button></li>`).join("");
+  const cards = list.map((s) => `
+    <article class="card spot${s.id === spotSel ? " is-sel" : ""}" data-spot-id="${s.id}" id="spot-card-${s.id}">
+      ${fig(s)}
       <div class="spot-head">
         <div class="spot-ico">${ic(s.icon)}</div>
         <div>
@@ -738,15 +831,73 @@ function renderSpots() {
         <li>${ic("flag")}<span>${esc(s.stay)}</span></li>
         ${s.notes.map((n) => `<li>${ic("alert")}<span>${esc(n)}</span></li>`).join("")}
       </ul>
-      ${s.about.length ? `<details class="about"><summary>どんな場所？${ic("chev", "icon chev")}</summary>${s.about.map((p) => `<p>${esc(p)}</p>`).join("")}</details>` : ""}
+      ${s.about.length ? `<details class="about"><summary>どんな場所？${ic("chev", "icon chev")}</summary>${s.about.map((p) => `<p>${esc(p)}</p>`).join("")}</details>
+      <div class="about-full"><h4 class="about-title">${ic("quiz")}どんな場所？</h4>${s.about.map((p) => `<p>${esc(p)}</p>`).join("")}</div>` : ""}
       <div class="spot-actions"><a class="btn small" href="${mapUrl(s.map)}" target="_blank" rel="noopener">${ic("pin")}地図を開く</a></div>
     </article>`).join("");
+  // スマホは今までどおりカードを縦に並べる。パソコンは左の一覧で選んだ1枚だけを右に大きく出す（.spot-list・.about-full はパソコンだけ）
   $("#panel-spots").innerHTML = `<h2>${ic("map")}スポット</h2>
-    <p class="lead">何時まで開いているか、どんな場所かをまとめました。「どんな場所？」を押すと解説が開きます。</p>${cards}`;
+    <p class="lead">何時まで開いているか、どんな場所かをまとめました。<span class="only-sp">「どんな場所？」を押すと解説が開きます。</span><span class="only-pc">一覧から選ぶと、右に大きく紹介します。</span></p>
+    <nav class="spot-list" aria-label="スポットの一覧"><ul>${picks}</ul></nav>
+    <div class="spot-cards">${cards}</div>`;
   $$("#panel-spots details.about").forEach((d) => d.addEventListener("toggle", () => {
     if (d.dataset.quiet) { delete d.dataset.quiet; return; } // 行程から飛んできて開いたときは、着いてから段落を出す（openSpot）
     if (d.open) enter($$("p", d), 0.05);
   }));
+}
+
+// 一覧で選んでいるスポットを切り替える（パソコンで右に出す1枚。スマホでは見た目は変わらない）
+function selectSpot(id) {
+  const card = spotCard(id);
+  if (!card) return null;
+  spotSel = id;
+  $$("#panel-spots .spot").forEach((c) => c.classList.toggle("is-sel", c === card));
+  $$("#panel-spots [data-pick-spot]").forEach((b) => {
+    if (b.dataset.pickSpot === id) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
+  });
+  return card;
+}
+
+// 別のスポットに切り替わったことが分かるように：イラストを少し横から、名前・メモ・解説を下から順に出す（Motion が無ければすぐ）
+function showSpotIn(card) {
+  if (!M || !card) return;
+  const fig = $(".spot-fig", card);
+  if (fig) {
+    const a = M.animate(fig, { opacity: [0, 1], x: [16, 0] }, { duration: 0.35, ease: [0.22, 1, 0.36, 1] });
+    setTimeout(() => { try { a.complete(); } catch (e) {} }, 350 + 400); // 途中で止まっても薄いまま残らないように
+  }
+  enter([$(".spot-head", card), $(".spot-meta", card), ...$$(".about-full > *", card)].filter(Boolean), 0.04);
+}
+
+// パソコンの一覧で押したとき
+function pickSpot(id) {
+  const same = id === spotSel;
+  const card = same ? spotCard(id) : selectSpot(id);
+  if (!card) return;
+  if (!same) {
+    if (jump) {
+      // 行程から来ているあいだは「← 行程に戻る」を選んだスポットへ移し、URL も今のスポットにそろえる（戻る操作はそのまま効く）
+      const back = $("#panel-spots .jump-back");
+      if (back) card.prepend(back);
+      jump.id = id;
+      if (hashSpot()) {
+        const st = history.state;
+        history.replaceState(st && st.shioriSpot ? { ...st, shioriSpot: id } : st, "", `#spot-${id}`);
+      }
+    }
+    showSpotIn(card);
+  }
+  // パネルの上がヘッダーに隠れていたら（下の方まで読んでいたら）、パネルの上まで戻す（選び直しても同じ）
+  if (card.getBoundingClientRect().top < $(".tabbar").offsetHeight) settleScroll(belowBar(card), !reduceMotion, () => {});
+}
+
+// 一覧の行に指を乗せた・フォーカスしたら、大きいイラストを先に読んでおく（切り替えたときに待たないように）
+const preloaded = new Set();
+function preloadSpot(id) {
+  const s = SPOTS[mode].find((x) => x.id === id);
+  if (!s || !s.img || preloaded.has(id)) return;
+  preloaded.add(id);
+  new Image().src = spotImg(s, true);
 }
 
 /* ============================================================
@@ -796,7 +947,7 @@ function realignAfterFonts(seq, getY) {
 }
 
 // 着いたカードを目立たせる。lift=true は飛んだ先（ふわっと持ち上げる＋レンガ色の枠）、false は戻った先（枠だけ軽く）
-function glow(el, lift) {
+function glow(el, lift, amp = 0.02) {
   if (!el) return;
   clearTimeout(el._glowT);
   if (!M) { // 動きを減らす設定・Motion が読めないとき：動かさずに枠の色だけ1秒出して消す
@@ -807,7 +958,7 @@ function glow(el, lift) {
   const c = (a) => `rgba(181, 72, 47, ${a})`;
   Object.assign(el.style, { outlineStyle: "solid", outlineWidth: "3px", outlineOffset: "3px", outlineColor: c(0) });
   const anims = [M.animate(el, { outlineColor: [c(0), c(lift ? 0.9 : 0.6), c(0)] }, { duration: lift ? 0.6 : 0.45, times: [0, 0.3, 1], ease: "easeOut" })];
-  if (lift) anims.push(M.animate(el, { scale: [0.98, 1.02, 1] }, { duration: 0.5, ease: [0.22, 1, 0.36, 1] }));
+  if (lift) anims.push(M.animate(el, { scale: [1 - amp, 1 + amp, 1] }, { duration: 0.5, ease: [0.22, 1, 0.36, 1] }));
   // アニメーションが途中で止まっても、枠や拡大が残らないようにする（complete が最後の値を書き終えてから枠を外す）
   el._glowT = setTimeout(() => {
     anims.forEach((a) => { try { a.complete(); } catch (e) {} });
@@ -857,11 +1008,14 @@ function openSpot(id, { from = null, push = false, initial = false } = {}) {
   }
   jump = { id, from };
   showTab("spots", { scroll: false, motion: false });
+  selectSpot(id); // パソコンでは一覧でこのスポットを選び、右に大きく出す
   if (from) {
     card.insertAdjacentHTML("afterbegin", `<button type="button" class="jump-back" data-jump-back><span aria-hidden="true">←</span>${BACK_TO[from.tab] || "行程"}に戻る</button>`);
   }
+  const pc = isPC();
   const d = $("details.about", card);
-  const ps = d ? $$("p", d) : [];
+  // 着いてから下から出す段落：パソコンは開いたままの解説、スマホは「どんな場所？」の中
+  const ps = pc ? $$(".about-full p", card) : d ? $$("p", d) : [];
   const anim = !!M && !initial;
   if (d && !d.open) { d.dataset.quiet = "1"; d.open = true; }
   if (anim) ps.forEach((p) => { p.style.opacity = "0"; });
@@ -870,7 +1024,7 @@ function openSpot(id, { from = null, push = false, initial = false } = {}) {
   h.focus({ preventScroll: true }); // 読み上げでも、どこに来たか分かるように
   settleScroll(belowBar(card), !reduceMotion && !initial, () => {
     if (seq !== jumpSeq) { ps.forEach((p) => { p.style.opacity = ""; }); return; }
-    glow(card, true);
+    glow(card, true, pc ? 0.006 : 0.02); // パソコンのパネルは大きいので、ふくらませ方を控えめに
     if (anim) enter(ps, 0.05);
     ps.forEach((p) => { p.style.opacity = ""; }); // 透明にしたのは着くまでのあいだだけ（出す動きは enter が持つ）
   });
@@ -1498,6 +1652,21 @@ $$(".tab").forEach((b) => b.addEventListener("click", () => {
   if (b.dataset.tab !== tab) endJump(true); // 自分でタブを切り替えたら「← 行程に戻る」と #spot- を消す
   showTab(b.dataset.tab);
 }));
+// スポットの一覧（パソコン）：押したら右に出す。指を乗せた・フォーカスしたら大きいイラストを先に読む（描き直しても効くようにパネルで受ける）
+{
+  const sp = $("#panel-spots");
+  sp.addEventListener("click", (e) => { const b = e.target.closest("[data-pick-spot]"); if (b) pickSpot(b.dataset.pickSpot); });
+  const warm = (e) => { const b = e.target.closest("[data-pick-spot]"); if (b) preloadSpot(b.dataset.pickSpot); };
+  sp.addEventListener("pointerover", warm);
+  sp.addEventListener("focusin", warm);
+  // 画像が読めなかったら、しおりの色の箱（パソコン）／何も出さない（スマホ）に。あとで読めたら戻す（error・load は泡立たないので捕まえる側で受ける）
+  const mark = (broken) => (e) => {
+    const box = e.target.tagName === "IMG" && e.target.closest(".spot-fig, .spot-thumb");
+    if (box) box.classList.toggle("is-broken", broken);
+  };
+  sp.addEventListener("error", mark(true), true);
+  sp.addEventListener("load", mark(false), true);
+}
 // 行程・「つぎはこれ」の「どんな場所？」とタイトル、スポットの「← 行程に戻る」（描き直しても効くように document で受ける）
 document.addEventListener("click", (e) => {
   if (e.target.closest("[data-jump-back]")) { goBackFromSpot(); return; }
